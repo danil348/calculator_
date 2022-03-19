@@ -4,6 +4,10 @@
 #include <iostream>
 #include <windows.h>
 #include "polynomial.h"
+#include "Fructions_calculator.h"
+#include "matrix.h"
+#include "combinatorics.h"
+#include "Theory.h"
 
 #define ESCAPE 27
 #define ENTER 13
@@ -54,9 +58,7 @@ private:
 	static const int СombinatoricMenuSize = 5;
 	string СombinatoricMenu[СombinatoricMenuSize] = { "размещение с повторениями", "размещение без повторениями", "сочетания с повторениями",
 		"сочетания без повторений", "перестановки"};
-
 	
-
 	int activePolynomialMenu = 0;
 	static const int PolynomialMenuSize = 6;
 	string PolynomialMenu[PolynomialMenuSize] = { "деление многочленов в столбик", "сложение многочленов", "вычитание многочленов",

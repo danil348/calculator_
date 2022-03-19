@@ -144,13 +144,12 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 void menu::functionSelection(int menuIndex)
 {
 	switch (menuIndex) {
-	//case 1: Theory(activeTheoryMenu); break; // теория вероятности
-	//case 2: Fractions(activeTheoryMenu); break; // дроби
-	//case 3: Matrix(activeTheoryMenu); break; // матричный калькулятор
-	//case 4: Сombinatoric(activeTheoryMenu); break; // комбинаторика
+	case 1: Theory(activeTheoryMenu); break; // теория вероятности
+	case 2: FractionCalculator(activeFractionsMenu); break; // дроби
+	case 3: Matrix(activeMatrixMenu); break; // матричный калькулятор
+	case 4: combinatorics(activeСombinatoricMenu); break; // комбинаторика
 	//case 5: Polynomial(activeTheoryMenu); break; // работа с функциями
 	case 6: Polynomial(activePolynomialMenu); break; // многочлены
-	default:
-		break;
+	default: break;
 	}
 }

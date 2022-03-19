@@ -140,12 +140,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="calc.cpp" />
+    <ClCompile Include="ChekOnRightOfNumber.cpp" />
+    <ClCompile Include="Fractions_calculator.cpp" />
+    <ClCompile Include="matrix.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="combinatorics.cpp" />
     <ClCompile Include="polynomial.cpp" />
+    <ClCompile Include="Theory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChekOnRightOfNumber.h" />
+    <ClInclude Include="Fructions_calculator.h" />
+    <ClInclude Include="matrix.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="combinatorics.h" />
     <ClInclude Include="polynomial.h" />
+    <ClInclude Include="Theory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
