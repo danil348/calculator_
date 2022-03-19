@@ -75,33 +75,42 @@ void DerivativeOfaPolynomial() {
 
 }
 
-//основная функция называть так как файл
-int Polynomial() {
-	setlocale(0, "");
-	int prov = 0, a = 0;
-	do {
-		switch (a)
-		{
-		case 0:
-			AdditionOfPolynomials();
-			a = -1;
-			break;
-		case 1:
-			PolynomialSubtraction();
-			break;
-		case 2:
-			PolynomialMultiplication();
-			break;
-		case 3:
-			MultiplicationByNumber();
-			break;
-		case 4:
-			DerivativeOfaPolynomial();
-			break;
-		}
-	} while (prov == 0);
-
-	return 0;
+void Polynomial(int taskNumber) {
+	switch (taskNumber) {
+	case 0: AdditionOfPolynomials(); break;
+	case 1: PolynomialSubtraction(); break;
+	case 2: PolynomialMultiplication(); break;
+	case 3: MultiplicationByNumber(); break;
+	case 4: DerivativeOfaPolynomial(); break;
+	default: break;
+	}
 }
 
-
+//основная функция называть так как файл
+//int Polynomial() {
+//	setlocale(0, "");
+//	int prov = 0, a = 0;
+//	do {
+//		switch (a)
+//		{
+//		case 0:
+//			AdditionOfPolynomials();
+//			a = -1;
+//			break;
+//		case 1:
+//			PolynomialSubtraction();
+//			break;
+//		case 2:
+//			PolynomialMultiplication();
+//			break;
+//		case 3:
+//			MultiplicationByNumber();
+//			break;
+//		case 4:
+//			DerivativeOfaPolynomial();
+//			break;
+//		}
+//	} while (prov == 0);
+//
+//	return 0;
+//}

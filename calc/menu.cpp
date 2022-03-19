@@ -1,14 +1,21 @@
 #include "menu.h"
 
+void menu::ConsoleCursorVisible(bool show)
+{
+	GetConsoleCursorInfo(hStdOut, &structCursorInfo);
+	structCursorInfo.bVisible = show;
+	SetConsoleCursorInfo(hStdOut, &structCursorInfo);
+}
+
 void menu::init()
 {
+	ConsoleCursorVisible(false);
 	isRunning = true;
 	while (runnig() == true) {
 		drow(mainMenu, mainMenuSize, activeMainMenu);
 		update(0);
 	}
 }
-
 
 void menu::drow(string *typeMenu, const int menuSize, int activeMenu)
 {
@@ -36,23 +43,8 @@ void menu::update(int menuIndex)
 			isRunning = false;
 			break;
 		case ENTER:
-			if (activeMainMenu == 0) {
-				update(1);
-			}
-			else if (activeMainMenu == 1) {
-				update(2);
-			}
-			else if (activeMainMenu == 2) {
-				update(3);
-			}
-			else if (activeMainMenu == 3) {
-				update(4);
-			}
-			else if (activeMainMenu == 4) {
-				update(5);
-			}
-			else if (activeMainMenu == 5) {
-				update(6);
+			if (activeMainMenu >= 0 && activeMainMenu < mainMenuSize - 1) {
+				update(activeMainMenu + 1);
 			}
 			else if (activeMainMenu == 6) {
 				isRunning = false;
@@ -78,61 +70,84 @@ void menu::update(int menuIndex)
 		default: break;
 		}
 	}
-	else if (menuIndex == 1) {
-		do {
-			drow(TheoryMenu, TheoryMenuSize, activeTheoryMenu);
-			cmd = _getch();
-			if (cmd == -32) cmd = _getch();
-			switch (cmd) {
-			case ESCAPE: system("cls"); activeTheoryMenu = 0;  break;
-			case ENTER: 
-				system("cls"); 
-				//polynominal(activeTheoryMenu);
-				if (activeTheoryMenu == 0) {
-					cout << "task 1\n";
-					cout << "íàæìèòå åíòåð äëÿ ïðîäîëæåíèÿ";
-				}
-				else if (activeTheoryMenu == 1) {
-					cout << "task 2\n";
-					cout << "íàæìèòå åíòåð äëÿ ïðîäîëæåíèÿ";
-				}
-				else if (activeTheoryMenu == 2) {
-					cout << "task 3\n";
-					cout << "íàæìèòå åíòåð äëÿ ïðîäîëæåíèÿ";
-				}
-				do {
-					cmd = _getch();
-					if (cmd == -32) cmd = _getch();
-					switch (cmd) {
-					case ESCAPE: system("cls"); break;
-					case ENTER: system("cls"); break;
-					}
-				} while (cmd != ESCAPE && cmd != ENTER);
-				activeTheoryMenu = 0; 
-				break;
-			case UP:
-				if (activeTheoryMenu > 0) {
-					activeTheoryMenu--;
-				}
-				else {
-					activeTheoryMenu = TheoryMenuSize - 1;
-				}
-				break;
-			case DOWN:
-				if (activeTheoryMenu < TheoryMenuSize - 1) {
-					activeTheoryMenu++;
-				}
-				else {
-					activeTheoryMenu = 0;
-				}
-				break;
-			default: break;
-			}
-		} while (cmd != ESCAPE && cmd != ENTER);
+	else if(menuIndex == 1){
+		drow(TheoryMenu, TheoryMenuSize, activeTheoryMenu, menuIndex);
+	}
+	else if (menuIndex == 2) {
+		drow(FractionsMenu, FractionsMenuSize, activeFractionsMenu, menuIndex);
+	}
+	else if (menuIndex == 3) {
+		drow(MatrixMenu, MatrixMenuSize, activeMatrixMenu, menuIndex);
+	}
+	else if (menuIndex == 4) {
+		drow(ÑombinatoricMenu, ÑombinatoricMenuSize, activeÑombinatoricMenu, menuIndex);
+	}
+	else if (menuIndex == 5) {
+		//drow(TheoryMenu, TheoryMenuSize, activeTheoryMenu, menuIndex);
+	}
+	else if (menuIndex == 6) {
+		drow(PolynomialMenu, PolynomialMenuSize, activePolynomialMenu, menuIndex);
 	}
 }
 
 bool menu::runnig()
 {
 	return isRunning;
+}
+
+void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuIndex)
+{
+	do {
+		drow(typeMenu, menuSize, activeMenu);
+		cmd = _getch();
+		if (cmd == -32) cmd = _getch();
+		switch (cmd) {
+		case ESCAPE: system("cls"); activeMenu = 0;  break;
+		case ENTER:
+			system("cls");
+			functionSelection(menuIndex);
+			cout << "\n\níàæìèòå Enter äëÿ ïðîäîëæåíèÿ\n";
+			do {
+				cmd = _getch();
+				if (cmd == -32) cmd = _getch();
+				switch (cmd) {
+				case ESCAPE: system("cls"); break;
+				case ENTER: system("cls"); break;
+				}
+			} while (cmd != ESCAPE && cmd != ENTER);
+			activeMenu = 0;
+			break;
+		case UP:
+			if (activeMenu > 0) {
+				activeMenu--;
+			}
+			else {
+				activeMenu = menuSize - 1;
+			}
+			break;
+		case DOWN:
+			if (activeMenu < menuSize - 1) {
+				activeMenu++;
+			}
+			else {
+				activeMenu = 0;
+			}
+			break;
+		default: break;
+		}
+	} while (cmd != ESCAPE && cmd != ENTER);
+}
+
+void menu::functionSelection(int menuIndex)
+{
+	switch (menuIndex) {
+	/*case 1: Polynomial(activeTheoryMenu); break;
+	case 2: Polynomial(activeTheoryMenu); break;
+	case 3: Polynomial(activeTheoryMenu); break;
+	case 4: Polynomial(activeTheoryMenu); break;
+	case 5: Polynomial(activeTheoryMenu); break;*/
+	case 6: Polynomial(activePolynomialMenu); break;
+	default:
+		break;
+	}
 }

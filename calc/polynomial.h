@@ -1,2 +1,2 @@
-
-int Polynomial();
+#pragma once
+void Polynomial(int taskNumber);
