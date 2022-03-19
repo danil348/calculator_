@@ -109,7 +109,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 		case ENTER:
 			system("cls");
 			functionSelection(menuIndex);
-			cout << "\n\nнажмите Enter для продолжения\n";
+			cout << "\n\nнажмите Enter чтобы вернуться к выбору действий\n";
 			do {
 				cmd = _getch();
 				if (cmd == -32) cmd = _getch();
