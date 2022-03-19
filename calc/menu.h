@@ -50,9 +50,9 @@ private:
 		"сокращение", "Представление в виде дес. дроби"};
 
 	int activeMatrixMenu = 0;
-	static const int MatrixMenuSize = 8;
+	static const int MatrixMenuSize = 9;
 	string MatrixMenu[MatrixMenuSize] = { "сложение матриц", "вычитание матриц", "умножение матриц", "умножение матрицы на число",
-		"сложение матрицы с числом","транспонирование матрицы", "обратная матрица", "определитель"};
+		"сложение матрицы с числом", "вычитание числа из матрицы", "транспонирование матрицы", "обратная матрица", "определитель"};
 
 	int activeСombinatoricMenu = 0;
 	static const int СombinatoricMenuSize = 5;
