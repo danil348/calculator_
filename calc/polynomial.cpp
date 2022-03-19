@@ -158,14 +158,14 @@ int Prov(string& s) {
 		if ((s[i] == 'x' || s[i] == 'X') && n == 0) {
 			n++;
 		}
-		for (int j = 0; j < 58; j++)
+		for (int j = 0; j < 59; j++)
 		{
 			if (s[i] == a[j]) {
 				n += 2;
 				break;
 			}
 		}
-		for (int j = 0; j < 58; j++)
+		for (int j = 0; j < 59; j++)
 		{
 			if (s[i] == A[j]) {
 				n += 2;
