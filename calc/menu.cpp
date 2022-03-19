@@ -50,8 +50,7 @@ void menu::update(int menuIndex)
 				update(activeMainMenu + 1);
 			}
 			else if (activeMainMenu == 6) {
-				isRunning = false;
-				exit(0);
+				PostMessage(hWnd, WM_CLOSE, 0, 0);
 			}
 			break;
 		case UP:

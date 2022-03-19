@@ -33,6 +33,7 @@ private:
 	char cmd = ' ';
 	bool isRunning = false;
 	CONSOLE_CURSOR_INFO structCursorInfo;
+	HWND hWnd = GetForegroundWindow();
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	int activeMainMenu = 0;
