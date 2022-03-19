@@ -106,16 +106,14 @@ void PerfomanceAtTen() { //Представление в десятичном виде
 
 
 void FractionCalculator(int task){
-	switch (task)
-	{
-	case 1: AdditionOfFractions(); break; //Сложение дробей
-	case 2: SubtractionOfFractions();  break; //Вычитание дробей
-	case 3: MultiplicationOfFractions(); break; //Умножение дробей
-	case 4: DivisionOfFractions(); system("cls"); break; //Деление дробей
-	case 5: ComparisonOfFractions(); system("cls"); break; //Сравнение дробей
-	case 6: ReductionOfFractions(); system("cls"); break; //Сокращение дробей
-	case 7: PerfomanceAtTen(); system("cls"); break; //Представлние в 10-чном виде
-	case 8: cout << "Выхожу..."; break; //Выход
-	default:break;
+	switch (task) {
+	case 0: AdditionOfFractions(); break; //Сложение дробей
+	case 1: SubtractionOfFractions();  break; //Вычитание дробей
+	case 2: MultiplicationOfFractions(); break; //Умножение дробей
+	case 3: DivisionOfFractions(); break; //Деление дробей
+	case 4: ComparisonOfFractions(); break; //Сравнение дробей
+	case 5: ReductionOfFractions(); break; //Сокращение дробей
+	case 6: PerfomanceAtTen(); break; //Представлние в 10-чном виде
+	default: break;
 	}
 }
