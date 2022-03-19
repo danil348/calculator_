@@ -14,25 +14,6 @@ struct Fraction
 };
 
 
-HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE); //Получить дискриптор консоли
-
-void MoveCord_X_Y(short x, short y) { //Функция перемещения символа по определённой координате
-	SetConsoleCursorPosition(hStdOut, { x,y });
-}
-
-void CursorVisible(bool show, short sizecurs) { //Функция включения видимости курсора в консоли
-	CONSOLE_CURSOR_INFO structCursorInfo;
-	GetConsoleCursorInfo(hStdOut, &structCursorInfo);
-	structCursorInfo.bVisible = show;//видимость
-	structCursorInfo.dwSize = sizecurs; //размер курсора
-	SetConsoleCursorInfo(hStdOut, &structCursorInfo);
-}
-void SetColor(int text, int background)//функция установления цвета текста и заднего фона
-{
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
-}
-
 void AdditionOfFractions() { //Сложение дробей
 	Fraction fraction[3];
 	cout << "Сложение дробей..." << endl;
@@ -71,13 +52,12 @@ void AdditionOfFractions() { //Сложение дробей
 	else {
 		for (int i = 1; i < 11; i++) {
 			if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-	
+				fraction[2].numerator /= i;
+				fraction[2].denominator /= i;
 			}
 		}
 	}
 	cout << fraction[0].numerator << " / " << fraction[0].denominator << " + " << fraction[1].numerator << " / " << fraction[1].denominator << " = " << fraction[2].numerator << " / " << fraction[2].denominator << endl;
-	cout << "Нажмите любую клавишу для продолжения...";
-	_getch();
 }
 
 void SubtractionOfFractions() { //Вычитание дробей
