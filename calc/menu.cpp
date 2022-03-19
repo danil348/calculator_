@@ -9,7 +9,6 @@ void menu::ConsoleCursorVisible(bool show)
 
 void menu::init()
 {
-	ConsoleCursorVisible(false);
 	isRunning = true;
 	while (runnig() == true) {
 		drow(mainMenu, mainMenuSize, activeMainMenu);
@@ -19,6 +18,7 @@ void menu::init()
 
 void menu::drow(string *typeMenu, const int menuSize, int activeMenu)
 {
+	ConsoleCursorVisible(false);
 	system("cls");
 
 	for (int i = 0; i < menuSize; i++)
@@ -142,6 +142,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 
 void menu::functionSelection(int menuIndex)
 {
+	ConsoleCursorVisible(true);
 	switch (menuIndex) {
 	case 1: Theory(activeTheoryMenu); break; // теория вероятности
 	case 2: FractionCalculator(activeFractionsMenu); break; // дроби
