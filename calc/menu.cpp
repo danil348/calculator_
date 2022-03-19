@@ -24,6 +24,9 @@ void menu::drow(string *typeMenu, const int menuSize, int activeMenu)
 	for (int i = 0; i < menuSize; i++)
 	{
 		cout << typeMenu[i];
+		for (int j = typeMenu[i].size(); j < 20; j++) {
+			cout << " ";
+		}
 		if (activeMenu == i) {
 			cout << "\t\t<--";
 		}
