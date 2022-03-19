@@ -1,6 +1,11 @@
 ﻿#include <iostream>
+#include "menu.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "RU");
+	
+	menu Menu;
+	
+	Menu.init();
 }
