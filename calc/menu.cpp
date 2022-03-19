@@ -150,7 +150,6 @@ void menu::functionSelection(int menuIndex)
 	case 4: Polynomial(activeTheoryMenu); break;
 	case 5: Polynomial(activeTheoryMenu); break;*/
 	case 6: Polynomial(activePolynomialMenu); break;
-	default:
-		break;
+	default: break;
 	}
 }
