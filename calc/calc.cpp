@@ -1,10 +1,12 @@
 ﻿#include <iostream>
+#include "polynomial.h"
+
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
-    std::cout << "Hello World!\n";
-    std::cout << "Hello World!\n";
-    std::cout << "Hello World!\n";
-    std::cout << "---Hello World!\n";
+    
+    Polynomial();
+    return 0;
+
 }
