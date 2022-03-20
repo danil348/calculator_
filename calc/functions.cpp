@@ -213,7 +213,7 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		} while (varb.N <= 0 || varb.N > 100);
 		cout << "Введите переменные a:\n";
 		for (int i = 0; i < varb.N; i++) {
-			cout << "a" << i + 1 << ": ";
+			cout << "a" << i << ": ";
 			varb.arrA[i] = ChekOnDouble();
 		}
 	}
@@ -315,11 +315,8 @@ void Integral(int TaskNumber) {
 	while (varb.x < varb.B) {
 		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
 		varb.x += varb.step;
-		if (varb.x >= varb.B) break;
-		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
-		varb.x += varb.step;
 	}
-	sum_integral = (varb.step / 3) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber) + FunctionIntegral(sum, varb, varb.B, TaskNumber));
+	sum_integral = (varb.step / 2) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber));
 	cout << "Интегрирование равно: " << sum_integral;
 }
 //------------------------------------------------------------
