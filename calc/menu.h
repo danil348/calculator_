@@ -64,7 +64,7 @@ private:
 	int activePolynomialMenu = 0;
 	static const int PolynomialMenuSize = 6;
 	string PolynomialMenu[PolynomialMenuSize] = { "деление многочленов в столбик", "сложение многочленов", "вычитание многочленов",
-		"умножение многочленов", "умножение многочлена на число", "вычитание производной от многочлена" };
+		"умножение многочленов", "умножение многочлена на число", "вычисление производной от многочлена" };
 
 	int activeFunctionsMenu = 0;
 	static const int FunctionsMenuSize = 4;
