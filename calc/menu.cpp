@@ -9,7 +9,6 @@ void menu::ConsoleCursorVisible(bool show)
 
 void menu::init()
 {
-	ConsoleCursorVisible(false);
 	isRunning = true;
 	while (runnig() == true) {
 		drow(mainMenu, mainMenuSize, activeMainMenu);
@@ -19,6 +18,7 @@ void menu::init()
 
 void menu::drow(string *typeMenu, const int menuSize, int activeMenu)
 {
+	ConsoleCursorVisible(false);
 	system("cls");
 
 	for (int i = 0; i < menuSize; i++)
@@ -43,15 +43,14 @@ void menu::update(int menuIndex)
 		switch (cmd)
 		{
 		case ESCAPE:
-			isRunning = false;
+			PostMessage(hWnd, WM_CLOSE, 0, 0);
 			break;
 		case ENTER:
 			if (activeMainMenu >= 0 && activeMainMenu < mainMenuSize - 1) {
 				update(activeMainMenu + 1);
 			}
 			else if (activeMainMenu == 6) {
-				isRunning = false;
-				exit(0);
+				PostMessage(hWnd, WM_CLOSE, 0, 0);
 			}
 			break;
 		case UP:
@@ -86,7 +85,7 @@ void menu::update(int menuIndex)
 		drow(ÑombinatoricMenu, ÑombinatoricMenuSize, activeÑombinatoricMenu, menuIndex);
 	}
 	else if (menuIndex == 5) {
-		//drow(TheoryMenu, TheoryMenuSize, activeTheoryMenu, menuIndex);
+		drow(FunctionsMenu, FunctionsMenuSize, activeFunctionsMenu, menuIndex);
 	}
 	else if (menuIndex == 6) {
 		drow(PolynomialMenu, PolynomialMenuSize, activePolynomialMenu, menuIndex);
@@ -100,6 +99,7 @@ bool menu::runnig()
 
 void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuIndex)
 {
+	bool flag = false;
 	do {
 		drow(typeMenu, menuSize, activeMenu);
 		cmd = _getch();
@@ -108,16 +108,59 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 		case ESCAPE: system("cls"); activeMenu = 0;  break;
 		case ENTER:
 			system("cls");
-			functionSelection(menuIndex);
-			cout << "\n\níàæìèòå Enter ÷òîáû âåðíóòüñÿ ê âûáîðó äåéñòâèé\n";
-			do {
-				cmd = _getch();
-				if (cmd == -32) cmd = _getch();
-				switch (cmd) {
-				case ESCAPE: system("cls"); break;
-				case ENTER: system("cls"); break;
-				}
-			} while (cmd != ESCAPE && cmd != ENTER);
+			if (menuIndex == 5) {
+				do {
+					drow(FunctionsDopMenu, FunctionsDopMenuSize, activeFunctionsDopMenu);
+					cmd = _getch();
+					if (cmd == -32) cmd = _getch();
+					switch (cmd) {
+					case ESCAPE: 
+						system("cls"); 
+						flag = true;
+						activeFunctionsDopMenu = 0; break;
+					case ENTER: 
+						system("cls");
+						ConsoleCursorVisible(true);
+						functions(activeMenu, activeFunctionsDopMenu);
+						ConsoleCursorVisible(false);
+						cout << "\n\níàæìèòå Enter ÷òîáû âåðíóòüñÿ ê âûáîðó äåéñòâèé\n";
+						activeFunctionsDopMenu = 0;
+						break;
+					case UP:
+						if (activeFunctionsDopMenu > 0) {
+							activeFunctionsDopMenu--;
+						}
+						else {
+							activeFunctionsDopMenu = FunctionsDopMenuSize - 1;
+						}
+						break;
+					case DOWN:
+						if (activeFunctionsDopMenu < FunctionsDopMenuSize - 1) {
+							activeFunctionsDopMenu++;
+						}
+						else {
+							activeFunctionsDopMenu = 0;
+						}
+						break;
+					}
+				} while (cmd != ESCAPE && cmd != ENTER);
+			}
+			else {
+				ConsoleCursorVisible(true);
+				functionSelection(menuIndex);
+				ConsoleCursorVisible(false);
+				cout << "\n\níàæìèòå Enter ÷òîáû âåðíóòüñÿ ê âûáîðó äåéñòâèé\n";
+			}
+			if (flag == false) {
+				do {
+					cmd = _getch();
+					if (cmd == -32) cmd = _getch();
+					switch (cmd) {
+					case ESCAPE: system("cls"); break;
+					case ENTER: system("cls"); break;
+					}
+				} while (cmd != ESCAPE && cmd != ENTER);
+			}
 			activeMenu = 0;
 			break;
 		case UP:
@@ -148,7 +191,6 @@ void menu::functionSelection(int menuIndex)
 	case 2: FractionCalculator(activeFractionsMenu); break; // äðîáè
 	case 3: Matrix(activeMatrixMenu); break; // ìàòðè÷íûé êàëüêóëÿòîð
 	case 4: combinatorics(activeÑombinatoricMenu); break; // êîìáèíàòîðèêà
-	//case 5: Polynomial(activeTheoryMenu); break; // ðàáîòà ñ ôóíêöèÿìè
 	case 6: Polynomial(activePolynomialMenu); break; // ìíîãî÷ëåíû
 	default: break;
 	}

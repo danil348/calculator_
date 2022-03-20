@@ -8,6 +8,7 @@
 #include "matrix.h"
 #include "combinatorics.h"
 #include "Theory.h"
+#include "functions.h"
 
 #define ESCAPE 27
 #define ENTER 13
@@ -33,6 +34,7 @@ private:
 	char cmd = ' ';
 	bool isRunning = false;
 	CONSOLE_CURSOR_INFO structCursorInfo;
+	HWND hWnd = GetForegroundWindow();
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	int activeMainMenu = 0;
@@ -50,9 +52,9 @@ private:
 		"сокращение", "Представление в виде дес. дроби"};
 
 	int activeMatrixMenu = 0;
-	static const int MatrixMenuSize = 8;
+	static const int MatrixMenuSize = 9;
 	string MatrixMenu[MatrixMenuSize] = { "сложение матриц", "вычитание матриц", "умножение матриц", "умножение матрицы на число",
-		"сложение матрицы с числом","транспонирование матрицы", "обратная матрица", "определитель"};
+		"сложение матрицы с числом", "вычитание числа из матрицы", "транспонирование матрицы", "обратная матрица", "определитель"};
 
 	int activeСombinatoricMenu = 0;
 	static const int СombinatoricMenuSize = 5;
@@ -63,5 +65,15 @@ private:
 	static const int PolynomialMenuSize = 6;
 	string PolynomialMenu[PolynomialMenuSize] = { "деление многочленов в столбик", "сложение многочленов", "вычитание многочленов",
 		"умножение многочленов", "умножение многочлена на число", "вычитание производной от многочлена" };
+
+	int activeFunctionsMenu = 0;
+	static const int FunctionsMenuSize = 4;
+	string FunctionsMenu[FunctionsMenuSize] = { "вычисление определённого интеграла на отрезке", "построение графика функции", "поиск корня Y=0 на отрезке",
+		"поиск экстремумов на отрезке" };
+
+	int activeFunctionsDopMenu = 0;
+	static const int FunctionsDopMenuSize = 8;
+	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
+		"4","5","6","7","8" };
 };
 
