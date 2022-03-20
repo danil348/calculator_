@@ -8,6 +8,7 @@
 #include "matrix.h"
 #include "combinatorics.h"
 #include "Theory.h"
+#include "functions.h"
 
 #define ESCAPE 27
 #define ENTER 13
@@ -64,5 +65,15 @@ private:
 	static const int PolynomialMenuSize = 6;
 	string PolynomialMenu[PolynomialMenuSize] = { "деление многочленов в столбик", "сложение многочленов", "вычитание многочленов",
 		"умножение многочленов", "умножение многочлена на число", "вычитание производной от многочлена" };
+
+	int activeFunctionsMenu = 0;
+	static const int FunctionsMenuSize = 4;
+	string FunctionsMenu[FunctionsMenuSize] = { "вычисление определённого интеграла на отрезке", "построение графика функции", "поиск корня Y=0 на отрезке",
+		"поиск экстремумов на отрезке" };
+
+	int activeFunctionsDopMenu = 0;
+	static const int FunctionsDopMenuSize = 8;
+	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
+		"4","5","6","7","8" };
 };
 
