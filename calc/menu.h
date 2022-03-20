@@ -74,6 +74,6 @@ private:
 	int activeFunctionsDopMenu = 0;
 	static const int FunctionsDopMenuSize = 8;
 	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
-		"показательная: a*ln(b*x)+c","5","6","7","8" };
+		"показательная: a*ln(b*x)+c","5","6","синусоида: a*sin(b*x+c)+d","косинусоида: a*cos(b*x+c)+d" };
 };
 
