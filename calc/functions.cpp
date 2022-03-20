@@ -1,6 +1,7 @@
 #pragma once
 #include "functions.h"
 #include "ChekOnRightOfNumber.h"
+#include <math.h>
 
 #define WIDTH 1580
 #define HEIGTH 1020
@@ -52,12 +53,6 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		variables.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 4) {
-
-	}
-	else if (TaskNumber == 5) {
-
-	}
-	else if (TaskNumber == 6) {
 		cout << "синусоида: a*sin(b*x+c)+d\n";
 		cout << "Введите a ";
 		variables.a = ChekOnDouble();
@@ -66,9 +61,9 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "Введите c ";
 		variables.c = ChekOnDouble();
 		cout << "Введите d ";
-		variables.c = ChekOnDouble();
+		variables.d = ChekOnDouble();
 	}
-	else if (TaskNumber == 7) {
+	else if (TaskNumber == 5) {
 		cout << "синусоида: a*cos(b*x+c)+d\n";
 		cout << "Введите a ";
 		variables.a = ChekOnDouble();
@@ -77,7 +72,7 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "Введите c ";
 		variables.c = ChekOnDouble();
 		cout << "Введите d ";
-		variables.c = ChekOnDouble();
+		variables.d = ChekOnDouble();
 	}
 }
 
@@ -179,16 +174,16 @@ void FunctionVisualization(int TaskNumber) {
 			tmpX = point.x;
 			tmpY = point.y;
 		}
-		else if (TaskNumber == 6) {
-			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+		else if (TaskNumber == 4) {
+			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
 			tmpY = point.y;
 		}
-		else if (TaskNumber == 7) {
-			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+		else if (TaskNumber == 5) {
+			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
@@ -209,39 +204,123 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 
 	if (TaskNumber == 0) {
 		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
-		cout << "Введите N:";
+		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		do {
+			varb.N = ChekOnInt();
+			if (varb.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
+			if (varb.N == 0) cout << "Степень полинома не может быть равна нулю! Повторите попытку: ";
+			if (varb.N > 100) cout << "Ограничение степени в 100! Повторите попытку: ";
+		} while (varb.N <= 0 || varb.N > 100);
+		cout << "Введите переменные a:\n";
+		for (int i = 0; i < varb.N; i++) {
+			cout << "a" << i + 1 << ": ";
+			varb.arrA[i] = ChekOnDouble();
+		}
 	}
 	else if (TaskNumber == 1) {
 		cout << "Степенная: a*x^b+c\n";
-		cout << "Введите a ";
+		cout << "Введите a: ";
 		varb.a = ChekOnDouble();
-		cout << "Введите b ";
+		cout << "Введите b: ";
 		varb.b = ChekOnDouble();
-		cout << "Введите c ";
+		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 2) {
 		cout << "Показательная: a*b^(c*x)+d\n";
-		cout << "Введите a ";
+		cout << "Введите a: ";
 		varb.a = ChekOnDouble();
-		cout << "Введите b ";
+		cout << "Введите b: ";
 		varb.b = ChekOnDouble();
-		cout << "Введите c ";
+		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
-		cout << "Введите d ";
+		cout << "Введите d: ";
 		varb.d = ChekOnDouble();
 	}
 	else if (TaskNumber == 3) {
+		cout << "Логарифмическая: a*ln(b*x)+c\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
 	}
+	else if (TaskNumber == 4) {
+		cout << "Синусоида: a*sin(b*x+c)+d\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
+		cout << "Введите d: ";
+		varb.d = ChekOnDouble();
+	}
+	else if (TaskNumber == 5) {
+		cout << "Косинусоида: a*cos(b*x+c)+d\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
+		cout << "Введите d: ";
+		varb.d = ChekOnDouble();
+	}
+	cout << "Введите начало отрезка: ";
+	varb.A = ChekOnDouble();
+	cout << "Введите конец отрезка: ";
+	do {
+		varb.B = ChekOnDouble();
+		if (varb.B < varb.A) cout << "Конец отрезка не может быть меньше начала! Повторите попытку";
+	} while (varb.B < varb.A);
+	cout << "Введите шаг интегрирования (чем меньше значение, тем больше точность): ";
+	do {
+		varb.step = ChekOnDouble();
+		if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
+	} while (varb.step == 0);
+}
+double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
+	sum = 0;
+	if (TaskNumber == 0) {
+		for (int i = 0; i < varb.N; i++) {
+			sum += varb.arrA[i] * pow(x, i);
+		}
+	}
+	if (TaskNumber == 1) {
+		sum = varb.a * pow(x, varb.b) + varb.c;
+	}
+	if (TaskNumber == 2) {
+		sum = varb.a * pow(varb.b, (varb.c * x)) + varb.d;
+	}
+	if (TaskNumber == 3) {
+		sum = varb.a * log(varb.b * x) + varb.c;
+	}
+	if (TaskNumber == 4) {
+		sum = varb.a * sin(varb.b * x + varb.c) + varb.d;
+	}
+	if (TaskNumber == 5) {
+		sum = varb.a * cos(varb.b * x + varb.c) + varb.d;
+	}
+	return sum;
 }
 
 void Integral(int TaskNumber) {
 	Variables varb;
+	double sum, sum_integral = 0;
 	cout << "Нахождение определённого интеграла на отрезке:" << endl;
 	FunctionInput(TaskNumber, varb);
-
-
-
+	varb.x = varb.step + varb.A;
+	while (varb.x < varb.B) {
+		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
+		varb.x += varb.step;
+		if (varb.x >= varb.B) break;
+		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
+		varb.x += varb.step;
+	}
+	sum_integral = (varb.step / 3) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber) + FunctionIntegral(sum, varb, varb.B, TaskNumber));
+	cout << "Интегрирование равно: " << sum_integral;
 }
 //------------------------------------------------------------
 
@@ -357,23 +436,19 @@ void RootSearch(int taskNumber) {
 	case 1: break;
 	case 2: break;
 	case 3: break;
-	case 6: RootSin(); break;
-	case 7: RootCos(); break;
+	case 4: RootSin(); break;
+	case 5: RootCos(); break;
 	default: break;
 	}
+
 }
 
 void functions(int  firstTaskNumber, int secondTaskNumber) {
-	cout << firstTaskNumber << " " << secondTaskNumber << endl;
 	switch (firstTaskNumber) {
 	case 0: Integral(secondTaskNumber); break;
 	case 1: FunctionVisualization(secondTaskNumber); break;
 	case 2: RootSearch(secondTaskNumber); break;
-	/*case 0: PlacementRepeat(); break;
-	case 1: PlacementNoRepeat(); break;
-	case 2: CombinationRepeat(); break;
-	case 3: CombinationNoRepeat(); break;
-	case 4: Transposition(); break;*/
+	//case 3: RootSearch(secondTaskNumber); break;
 	default: break;
 	}
 }
