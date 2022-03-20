@@ -320,6 +320,8 @@ void Integral(int TaskNumber) {
 	cout << "Интегрирование равно: " << sum_integral;
 }
 //------------------------------------------------------------
+
+
 double fsin(double A, double B, double C, double D, double x) {
 
 	return   A * sin(B * x + C) + D;
@@ -333,7 +335,8 @@ double fcos(double A, double B, double C, double D, double x) {
 void RootSin() {
 
 	double A, B, C, D;
-	double left, right, x, eps;
+	double left = -1, right = 1, x, eps = 0.1;
+	bool check = true;
 
 	cout << "Коэффициенты уравнения синусоиды: " << endl;
 	cout << "A = "; cin >> A;
@@ -341,17 +344,48 @@ void RootSin() {
 	cout << "C = "; cin >> C;
 	cout << "D = "; cin >> D;
 
-	cout << "Границы поиска корней: " << endl;
-	cout << "Левая граница = "; cin >> left;
-	cout << "Правая граница = "; cin >> right;
-	cout << "Точность = "; cin >> eps;
+	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
+	do {
+		if (left >= 0) cout << "Левая граница введена неверно" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно" << endl;
+		cout << "Левая граница = "; cin >> left;
+		cout << "Правая граница = "; cin >> right;
+	} while (left >= 0 or right <= 0);
+	double secleft = left;
+	double secright = right;
+
+	do {
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
+		cout << "Точность = "; cin >> eps;
+	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
+		if (int(fsin(A, B, C, D, x)) != 0 and ((right - left) / 2) < eps) {
+			cout << "На данном отрезке функция не имеет корней" << endl;
+			check = false;
+			break;
+		}
 		if (fsin(A, B, C, D, x) * fsin(A, B, C, D, left) <= 0) right = x;
 		else left = x;
 	} while (fabs(left - right) >= eps);
-	cout << "X = " << x << "\n";
+
+	int kright = 0, kleft = 0;
+	double period = 2 * M_PI / B;
+	double xx = x;
+	while (true) {
+		if (xx + period < secright) xx += period;
+		else break;
+		kright += 1;
+	}
+	xx = x;
+	while (true) {
+		if (xx - period > secleft) xx -= period;
+		else break;
+		kleft -= 1;
+	}
+
+	if (check) cout << "X = " << x << " + 2Пk/" << B << ", где k Э [" << kleft << ", " << kright << "]" << endl;
 }
 
 void RootCos() {
@@ -390,7 +424,7 @@ void RootCos() {
 		else left = x;
 	} while (fabs(left - right) >= eps);
 
-	if (check) cout << "X = " << x << "\n";
+	if (check) cout << "X = " << x << endl;
 }
 
 void RootSearch(int taskNumber) {
