@@ -1,18 +1,12 @@
-#include <iostream>
-#include <Windows.h>
-#include <conio.h>
 #include "Fructions_calculator.h"
 #include "ChekOnRightOfNumber.h"
 
-
 using namespace std;
-
 
 struct Fraction
 {
 	int numerator, denominator;//числитель, знаменатель
 };
-
 
 void AdditionOfFractions() { //Сложение дробей
 	Fraction fraction[3];

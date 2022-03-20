@@ -1,13 +1,40 @@
 #include "Theory.h"
+#include "ChekOnRightOfNumber.h"
 
-void Theory(int taskNumber) {
-	switch (taskNumber) {
-		/*case 0: DivisionOfPolynomials(); break;
-		case 1: AdditionOfPolynomials(); break;
-		case 2: PolynomialSubtraction(); break;
-		case 3: PolynomialMultiplication(); break;
-		case 4: MultiplicationByNumber(); break;
-		case 5: DerivativeOfaPolynomial(); break;*/
+void Probability() {
+	int m, n;
+	cout << "¬еро€тность исхода по P(A) = m/n\n¬ведите общее количество веро€тных исходов:";
+	do {
+		n = ChekOnInt();
+		if (n < 0) {
+			cout << " оличесвто веро€тных исходов не может быть меньше нул€! повторите попытку: ";
+		}
+		else if (n == 0) {
+			cout << " оличество веро€тных исходов не может быть равно ноль! ѕовторите попытку: ";
+		}
+	} while (n <= 0);
+	cout << "¬ведите общее количество благопри€тных исходов:";
+	do {
+		m = ChekOnInt();
+		if (m > n) {
+			cout << " оличество благопри€тных исходов не может быть больше количества веро€тных исходов! ѕовторите попытку: ";
+		}
+		else if (m == 0) {
+			cout << " оличество благопри€тных исходов не может быть равно ноль! ѕовторите попытку: ";
+		}
+		else if (m < 0) {
+			cout << " оличество благопри€тных сходов не может быть отрицательным! ѕовторите попытку: ";
+		}
+	} while (m <= 0 || m > n);
+	
+	cout << "¬еро€тность P(A) = m/n равна: " << double(m) / n;
+}
+
+void Theory(int task) {
+	switch (task) {
+	case 0:Probability(); break;
+	case 1:
+	case 2:
 	default: break;
 	}
 }
