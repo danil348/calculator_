@@ -1,6 +1,7 @@
 #pragma once
 #include "functions.h"
 #include "ChekOnRightOfNumber.h"
+#include <math.h>
 
 #define WIDTH 1580
 #define HEIGTH 1020
@@ -10,7 +11,9 @@
 #define OFFSET_Y WIDTH/2
 
 struct Variables
-{ 
+{
+	double A, B;
+	double step;
 	double arrA[100];
 	int N;
 	double a, b, x, c, d;
@@ -164,39 +167,86 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 
 	if (TaskNumber == 0) {
 		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
-		cout << "Введите N:";
+		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		do {
+			varb.N = ChekOnInt();
+			if (varb.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
+			if (varb.N == 0) cout << "Степень полинома не может быть равна нулю! Повторите попытку: ";
+			if (varb.N > 100) cout << "Ограничение степени в 100! Повторите попытку: ";
+		} while (varb.N <= 0 || varb.N > 100);
+		cout << "Введите переменные a:\n";
+		for (int i = 0; i < varb.N; i++) {
+			cout << "a" << i + 1 << ": ";
+			varb.arrA[i] = ChekOnDouble();
+		}
 	}
 	else if (TaskNumber == 1) {
 		cout << "Степенная: a*x^b+c\n";
-		cout << "Введите a ";
+		cout << "Введите a: ";
 		varb.a = ChekOnDouble();
-		cout << "Введите b ";
+		cout << "Введите b: ";
 		varb.b = ChekOnDouble();
-		cout << "Введите c ";
+		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 2) {
 		cout << "Показательная: a*b^(c*x)+d\n";
-		cout << "Введите a ";
+		cout << "Введите a: ";
 		varb.a = ChekOnDouble();
-		cout << "Введите b ";
+		cout << "Введите b: ";
 		varb.b = ChekOnDouble();
-		cout << "Введите c ";
+		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
-		cout << "Введите d ";
+		cout << "Введите d: ";
 		varb.d = ChekOnDouble();
 	}
 	else if (TaskNumber == 3) {
+		cout << "Логарифмическая: a*ln(b*x)+c\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
 	}
+	cout << "Введите начало отрезка: ";
+	varb.A = ChekOnDouble();
+	cout << "Введите конец отрезка: ";
+	do {
+		varb.B = ChekOnDouble();
+		if (varb.B < varb.A) cout << "Конец отрезка не может быть меньше начала! Повторите попытку";
+	} while (varb.B < varb.A);
+	cout << "Введите шаг интегрирования (чем меньше значение, тем больше точность): ";
+	do {
+		varb.step = ChekOnDouble();
+		if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
+	} while (varb.step == 0);
+}
+
+double FunctionIntegral(double &sum,Variables varb, int &TaskNumber) {
+	sum = 0;
+	if (TaskNumber == 0) {
+		for (int i = 0; i < varb.N; i++) {
+			sum += varb.arrA[i] * pow(varb.x, i);
+		}
+		return sum;
+	}
+
 }
 
 void Integral(int TaskNumber) {
 	Variables varb;
+	double sum, sum_integral = 0;
 	cout << "Нахождение определённого интеграла на отрезке:" << endl;
 	FunctionInput(TaskNumber, varb);
-
-
-
+	varb.x = varb.step + varb.A;
+	while (varb.x < varb.B) {
+		sum_integral += 2 * FunctionIntegral(sum, varb, TaskNumber);
+		varb.x += varb.step;
+		if (varb.x >= varb.B) break;
+	}
+	sum_integral *= varb.step / 3;
+	cout << "Интегрирование равно: " << sum_integral;
 }
 
 void functions(int  firstTaskNumber, int secondTaskNumber) {
