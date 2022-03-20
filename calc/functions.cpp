@@ -293,11 +293,9 @@ double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 		for (int i = 0; i < varb.N; i++) {
 			sum += varb.arrA[i] * pow(x, i);
 		}
-		return sum;
 	}
 	if (TaskNumber == 1) {
 		sum = varb.a * pow(x, varb.b) + varb.c;
-		return sum;
 	}
 	if (TaskNumber == 2) {
 		sum = varb.a * pow(varb.b, (varb.c * x)) + varb.d;
@@ -311,6 +309,7 @@ double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 	if (TaskNumber == 5) {
 		sum = varb.a * cos(varb.b * x + varb.c) + varb.d;
 	}
+	return sum;
 }
 
 void Integral(int TaskNumber) {
