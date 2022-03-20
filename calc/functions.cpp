@@ -21,7 +21,19 @@ struct Variables
 
 void EnteringTask(int TaskNumber, Variables &variables) {
 	if (TaskNumber == 0) {
-		// polinom
+		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
+		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		do {
+			variables.N = ChekOnInt();
+			if (variables.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
+			if (variables.N == 0) cout << "Степень полинома не может быть равна нулю! Повторите попытку: ";
+			if (variables.N > 100) cout << "Ограничение степени в 100! Повторите попытку: ";
+		} while (variables.N <= 0 || variables.N > 100);
+		cout << "Введите переменные a:\n";
+		for (int i = 0; i < variables.N; i++) {
+			cout << "a" << i + 1 << ": ";
+			variables.arrA[i] = ChekOnDouble();
+		}
 	}
 	else if (TaskNumber == 1) {
 		cout << "Степенная: a*x^b+c\n";
@@ -73,6 +85,24 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		variables.c = ChekOnDouble();
 		cout << "Введите d ";
 		variables.d = ChekOnDouble();
+	}
+}
+
+void ExtremesSearch(int TaskNumber) {
+	Variables variables;
+	double min = 0;
+	double eps = 0;
+	cout << "введите левую границу";
+	variables.A = ChekOnDouble();
+	cout << "введите правую границу";
+	variables.B = ChekOnDouble();
+
+	EnteringTask(TaskNumber, variables);
+	if (TaskNumber == 0) {
+
+	}
+	else if (TaskNumber == 1) {
+		//min = variables.a* variables.b*pow(variables.A, variables.b)
 	}
 }
 
@@ -144,6 +174,7 @@ void FunctionVisualization(int TaskNumber) {
 	
 	int tmpX = 0;
 	int tmpY = 0;
+	int sum = 0;
 	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
 		point.x = i + WIDTH / 2;
 		if (TaskNumber == 0) {
@@ -194,7 +225,7 @@ void FunctionVisualization(int TaskNumber) {
 
 
 	SDL_RenderPresent(renderer);
-	SDL_Delay(5000);
+	SDL_Delay(20000);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -414,7 +445,7 @@ void functions(int  firstTaskNumber, int secondTaskNumber) {
 	case 0: Integral(secondTaskNumber); break;
 	case 1: FunctionVisualization(secondTaskNumber); break;
 	case 2: RootSearch(secondTaskNumber); break;
-	//case 3: RootSearch(secondTaskNumber); break;
+	case 3: ExtremesSearch(secondTaskNumber); break;
 	default: break;
 	}
 }
