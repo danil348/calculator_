@@ -252,6 +252,28 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
 	}
+	else if (TaskNumber == 4) {
+		cout << "Синусоида: a*sin(b*x+c)+d\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
+		cout << "Введите d: ";
+		varb.d = ChekOnDouble();
+	}
+	else if (TaskNumber == 5) {
+		cout << "Косинусоида: a*cos(b*x+c)+d\n";
+		cout << "Введите a: ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b: ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c: ";
+		varb.c = ChekOnDouble();
+		cout << "Введите d: ";
+		varb.d = ChekOnDouble();
+	}
 	cout << "Введите начало отрезка: ";
 	varb.A = ChekOnDouble();
 	cout << "Введите конец отрезка: ";
@@ -265,16 +287,30 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
 	} while (varb.step == 0);
 }
-
-double FunctionIntegral(double &sum,Variables varb, int &TaskNumber) {
+double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 	sum = 0;
 	if (TaskNumber == 0) {
 		for (int i = 0; i < varb.N; i++) {
-			sum += varb.arrA[i] * pow(varb.x, i);
+			sum += varb.arrA[i] * pow(x, i);
 		}
 		return sum;
 	}
-
+	if (TaskNumber == 1) {
+		sum = varb.a * pow(x, varb.b) + varb.c;
+		return sum;
+	}
+	if (TaskNumber == 2) {
+		sum = varb.a * pow(varb.b, (varb.c * x)) + varb.d;
+	}
+	if (TaskNumber == 3) {
+		sum = varb.a * log(varb.b * x) + varb.c;
+	}
+	if (TaskNumber == 4) {
+		sum = varb.a * sin(varb.b * x + varb.c) + varb.d;
+	}
+	if (TaskNumber == 5) {
+		sum = varb.a * cos(varb.b * x + varb.c) + varb.d;
+	}
 }
 
 void Integral(int TaskNumber) {
@@ -282,9 +318,16 @@ void Integral(int TaskNumber) {
 	double sum, sum_integral = 0;
 	cout << "Нахождение определённого интеграла на отрезке:" << endl;
 	FunctionInput(TaskNumber, varb);
-
-
-
+	varb.x = varb.step + varb.A;
+	while (varb.x < varb.B) {
+		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
+		varb.x += varb.step;
+		if (varb.x >= varb.B) break;
+		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
+		varb.x += varb.step;
+	}
+	sum_integral = (varb.step / 3) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber) + FunctionIntegral(sum, varb, varb.B, TaskNumber));
+	cout << "Интегрирование равно: " << sum_integral;
 }
 //------------------------------------------------------------
 double fsin(double A, double B, double C, double D, double x) {
