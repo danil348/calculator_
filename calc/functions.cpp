@@ -3,8 +3,8 @@
 #include "ChekOnRightOfNumber.h"
 #include <math.h>
 
-#define WIDTH 1580
-#define HEIGTH 1020
+#define WIDTH 1500
+#define HEIGTH 800
 
 #define SEGMENT 80
 #define OFFSET_X HEIGTH / 2
@@ -88,10 +88,28 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 	}
 }
 
+struct Func
+{
+	double func1(double x, Variables &variables) {
+		return variables.a * variables.b * pow(x, variables.b);
+	}
+	double func2(double x, Variables& variables) {
+		return variables.a * variables.c * pow(variables.b, variables.c * x) * log(variables.b);
+	}
+	double func3(double x, Variables& variables) {
+		return variables.a / x;
+	}
+	double func4(double x, Variables& variables) {
+		return variables.a * variables.b * cos(variables.b * x + variables.c);
+	}
+};
+
 void ExtremesSearch(int TaskNumber) {
 	Variables variables;
+	Func func;
 	double min = 0;
 	double eps = 0;
+	bool flag = false;
 	cout << "введите левую границу";
 	variables.A = ChekOnDouble();
 	cout << "введите правую границу";
@@ -102,7 +120,34 @@ void ExtremesSearch(int TaskNumber) {
 
 	}
 	else if (TaskNumber == 1) {
-		//min = variables.a* variables.b*pow(variables.A, variables.b)
+		double tmpAns;
+		for (int i = variables.A; i < variables.B; i++) {
+			if (func.func1(i, variables) == 0) {
+				cout << "x = " << i << "\n"; 
+				flag = true;
+			}
+		}
+	}
+	else if (TaskNumber == 2) {
+		double tmpAns;
+		for (int i = variables.A; i < variables.B; i++) {
+			if (func.func2(i, variables) == 0) {
+				cout << "x = " << i << "\n";
+				flag = true;
+			}
+		}
+	}
+	else if (TaskNumber == 3) {
+		double tmpAns;
+		for (int i = variables.A; i < variables.B; i++) {
+			if (func.func3(i, variables) == 0) {
+				cout << "x = " << i << "\n";
+				flag = true;
+			}
+		}
+	}
+	if (flag == false) {
+		cout << "Ёкстремумов нет";
 	}
 }
 
@@ -225,7 +270,7 @@ void FunctionVisualization(int TaskNumber) {
 
 
 	SDL_RenderPresent(renderer);
-	SDL_Delay(20000);
+	SDL_Delay(8000);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

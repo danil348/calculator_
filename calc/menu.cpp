@@ -161,6 +161,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 					}
 				} while (cmd != ESCAPE && cmd != ENTER);
 			}
+			cmd = ' ';
 			activeMenu = 0;
 			break;
 		case UP:
