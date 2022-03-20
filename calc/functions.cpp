@@ -52,12 +52,6 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		variables.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 4) {
-
-	}
-	else if (TaskNumber == 5) {
-
-	}
-	else if (TaskNumber == 6) {
 		cout << "синусоида: a*sin(b*x+c)+d\n";
 		cout << "¬ведите a ";
 		variables.a = ChekOnDouble();
@@ -66,9 +60,9 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "¬ведите c ";
 		variables.c = ChekOnDouble();
 		cout << "¬ведите d ";
-		variables.c = ChekOnDouble();
+		variables.d = ChekOnDouble();
 	}
-	else if (TaskNumber == 7) {
+	else if (TaskNumber == 5) {
 		cout << "синусоида: a*cos(b*x+c)+d\n";
 		cout << "¬ведите a ";
 		variables.a = ChekOnDouble();
@@ -77,7 +71,7 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "¬ведите c ";
 		variables.c = ChekOnDouble();
 		cout << "¬ведите d ";
-		variables.c = ChekOnDouble();
+		variables.d = ChekOnDouble();
 	}
 }
 
@@ -179,16 +173,16 @@ void FunctionVisualization(int TaskNumber) {
 			tmpX = point.x;
 			tmpY = point.y;
 		}
-		else if (TaskNumber == 6) {
-			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+		else if (TaskNumber == 4) {
+			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
 			tmpY = point.y;
 		}
-		else if (TaskNumber == 7) {
-			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+		else if (TaskNumber == 5) {
+			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
@@ -323,23 +317,18 @@ void RootSearch(int taskNumber) {
 	case 1: break;
 	case 2: break;
 	case 3: break;
-	case 6: RootSin(); break;
-	case 7: RootCos(); break;
+	case 4: RootSin(); break;
+	case 5: RootCos(); break;
 	default: break;
 	}
 }
 
 void functions(int  firstTaskNumber, int secondTaskNumber) {
-	cout << firstTaskNumber << " " << secondTaskNumber << endl;
 	switch (firstTaskNumber) {
 	case 0: Integral(secondTaskNumber); break;
 	case 1: FunctionVisualization(secondTaskNumber); break;
 	case 2: RootSearch(secondTaskNumber); break;
-	/*case 0: PlacementRepeat(); break;
-	case 1: PlacementNoRepeat(); break;
-	case 2: CombinationRepeat(); break;
-	case 3: CombinationNoRepeat(); break;
-	case 4: Transposition(); break;*/
+	//case 3: RootSearch(secondTaskNumber); break;
 	default: break;
 	}
 }
