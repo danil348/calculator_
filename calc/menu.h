@@ -58,7 +58,7 @@ private:
 
 	int activeСombinatoricMenu = 0;
 	static const int СombinatoricMenuSize = 5;
-	string СombinatoricMenu[СombinatoricMenuSize] = { "размещение с повторениями", "размещение без повторениями", "сочетания с повторениями",
+	string СombinatoricMenu[СombinatoricMenuSize] = { "размещение с повторениями", "размещение без повторений", "сочетания с повторениями",
 		"сочетания без повторений", "перестановки"};
 	
 	int activePolynomialMenu = 0;
@@ -74,6 +74,6 @@ private:
 	int activeFunctionsDopMenu = 0;
 	static const int FunctionsDopMenuSize = 8;
 	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
-		"4","5","6","7","8" };
+		"показательная: a*ln(b*x)+c","5","6","7","8" };
 };
 

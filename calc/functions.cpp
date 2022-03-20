@@ -5,13 +5,15 @@
 #define WIDTH 1580
 #define HEIGTH 1020
 
-#define SEGMENT 100
-#define OFFSET_X (WIDTH - WIDTH % SEGMENT) / 2 + SEGMENT/ 2
-#define OFFSET_Y (HEIGTH - HEIGTH % SEGMENT) / 2 + SEGMENT/ 2
+#define SEGMENT 80
+#define OFFSET_X HEIGTH/2
+#define OFFSET_Y WIDTH/2
 
 struct Variables
-{
-	double a, b, x, c, N, d;
+{ 
+	double arrA[100];
+	int N;
+	double a, b, x, c, d;
 };
 
 void EnteringTask(int TaskNumber, Variables &variables) {
@@ -21,11 +23,31 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 	}
 	else if (TaskNumber == 1) {
 		cout << "Степенная: a*x^b+c\n";
-		cout << "Введите a";
+		cout << "Введите a ";
 		variables.a = ChekOnDouble();
-		cout << "Введите b";
+		cout << "Введите b ";
 		variables.b = ChekOnDouble();
-		cout << "Введите c";
+		cout << "Введите c ";
+		variables.c = ChekOnDouble();
+	}
+	else if (TaskNumber == 2) {
+		cout << "показательная: a*b^(c*x)+d\n";
+		cout << "Введите a ";
+		variables.a = ChekOnDouble();
+		cout << "Введите b ";
+		variables.b = ChekOnDouble();
+		cout << "Введите c ";
+		variables.c = ChekOnDouble();
+		cout << "Введите d ";
+		variables.d = ChekOnDouble();
+	}
+	else if (TaskNumber == 3) {
+		cout << "показательная: a*ln(b*x)+c\n";
+		cout << "Введите a ";
+		variables.a = ChekOnDouble();
+		cout << "Введите b ";
+		variables.b = ChekOnDouble();
+		cout << "Введите c ";
 		variables.c = ChekOnDouble();
 	}
 }
@@ -49,42 +71,84 @@ void FunctionVisualization(int TaskNumber) {
 	point.y = OFFSET_X;
 	for (int i = 0; i < WIDTH; i++) {
 		point.x = i;
-		if ((i % SEGMENT) == 0) {
-			for (int j = -10; j < 10; j++) {
-				point.y = HEIGTH / 2 + j;
+		SDL_RenderDrawPoint(renderer, point.x, point.y);
+	}
+	for (int i = OFFSET_Y; i > 0; i--) {
+		point.x = i;
+		if ((OFFSET_Y - i) % SEGMENT == 0) {
+			for (int j = -5; j < 5; j++) {
+				point.y = OFFSET_X + j;
 				SDL_RenderDrawPoint(renderer, point.x, point.y);
 			}
 		}
-		SDL_RenderDrawPoint(renderer, point.x, point.y);
 	}
-	point.x = OFFSET_X;
+	for (int i = OFFSET_Y; i < WIDTH; i++) {
+		point.x = i;
+		if ((i - OFFSET_Y) % SEGMENT == 0) {
+			for (int j = -5; j < 5; j++) {
+				point.y = OFFSET_X + j;
+				SDL_RenderDrawPoint(renderer, point.x, point.y);
+			}
+		}
+	}
+
+
+
+	point.x = OFFSET_Y;
 	for (int i = 0; i < HEIGTH; i++) {
 		point.y = i;
-		if ((i % SEGMENT - HEIGTH%100) == 0) {
-			for (int j = -10; j < 10; j++) {
-				point.x = WIDTH / 2 + j;
+		SDL_RenderDrawPoint(renderer, point.x, point.y);
+	}
+	for (int i = OFFSET_X; i < HEIGTH; i++) {
+		point.y = i;
+		if ((OFFSET_X - i) % SEGMENT == 0) {
+			for (int j = -5; j < 5; j++) {
+				point.x = OFFSET_Y + j;
 				SDL_RenderDrawPoint(renderer, point.x, point.y);
 			}
 		}
-		SDL_RenderDrawPoint(renderer, point.x, point.y);
 	}
-
-	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
-		for (int j = 0; j < 200; j++) {
-			if (TaskNumber == 0) {
-
-			}
-			else if (TaskNumber == 1) {
-				point.x = i + (WIDTH - WIDTH % SEGMENT) / 2 + SEGMENT / 2;
-				point.y = -(variables.a * pow(i, variables.b))/100 + (HEIGTH + HEIGTH % 100)/2 - variables.c * SEGMENT;
-				if (point.y == 1 && point.x == 1) {
-					SDL_SetRenderDrawColor(renderer, 255, 2, 3, 0);
-				}
-				else {
-					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-				}
+	for (int i = OFFSET_X; i > 0; i--) {
+		point.y = i;
+		if ((i - OFFSET_X) % SEGMENT == 0) {
+			for (int j = -5; j < 5; j++) {
+				point.x = OFFSET_Y + j;
 				SDL_RenderDrawPoint(renderer, point.x, point.y);
 			}
+		}
+	}
+	
+	int tmpX = 0;
+	int tmpY = 0;
+	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
+		point.x = i + WIDTH / 2;
+		if (TaskNumber == 0) {
+
+		}
+		else if (TaskNumber == 1) {
+			point.y = -(variables.a * pow(i, variables.b)) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
+		}
+		else if (TaskNumber == 2) {
+			point.y = -variables.a * pow(variables.b, (variables.c * (double(i) / SEGMENT))) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
+		}
+		else if (TaskNumber == 3) {
+			point.y = -variables.a * log(variables.b * double(i)/SEGMENT) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
 		}
 	}
 
@@ -96,9 +160,49 @@ void FunctionVisualization(int TaskNumber) {
 	SDL_Quit();
 }
 
+void FunctionInput(int TaskNumber, Variables& varb) {
+
+	if (TaskNumber == 0) {
+		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
+		cout << "Введите N:";
+	}
+	else if (TaskNumber == 1) {
+		cout << "Степенная: a*x^b+c\n";
+		cout << "Введите a ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c ";
+		varb.c = ChekOnDouble();
+	}
+	else if (TaskNumber == 2) {
+		cout << "Показательная: a*b^(c*x)+d\n";
+		cout << "Введите a ";
+		varb.a = ChekOnDouble();
+		cout << "Введите b ";
+		varb.b = ChekOnDouble();
+		cout << "Введите c ";
+		varb.c = ChekOnDouble();
+		cout << "Введите d ";
+		varb.d = ChekOnDouble();
+	}
+	else if (TaskNumber == 3) {
+	}
+}
+
+void Integral(int TaskNumber) {
+	Variables varb;
+	cout << "Нахождение определённого интеграла на отрезке:" << endl;
+	FunctionInput(TaskNumber, varb);
+
+
+
+}
+
 void functions(int  firstTaskNumber, int secondTaskNumber) {
 	cout << firstTaskNumber << " " << secondTaskNumber << endl;
 	switch (firstTaskNumber) {
+	case 0: Integral(secondTaskNumber); break;
 	case 1: FunctionVisualization(secondTaskNumber); break;
 	/*case 0: PlacementRepeat(); break;
 	case 1: PlacementNoRepeat(); break;
