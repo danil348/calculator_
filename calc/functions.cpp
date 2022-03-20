@@ -7,11 +7,11 @@
 #define HEIGTH 1020
 
 #define SEGMENT 80
-#define OFFSET_X HEIGTH/2
-#define OFFSET_Y WIDTH/2
+#define OFFSET_X HEIGTH / 2
+#define OFFSET_Y WIDTH / 2
 
 struct Variables
-{
+{ 
 	double A, B;
 	double step;
 	double arrA[100];
@@ -20,7 +20,6 @@ struct Variables
 };
 
 void EnteringTask(int TaskNumber, Variables &variables) {
-	
 	if (TaskNumber == 0) {
 		// polinom
 	}
@@ -51,6 +50,34 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "Введите b ";
 		variables.b = ChekOnDouble();
 		cout << "Введите c ";
+		variables.c = ChekOnDouble();
+	}
+	else if (TaskNumber == 4) {
+
+	}
+	else if (TaskNumber == 5) {
+
+	}
+	else if (TaskNumber == 6) {
+		cout << "синусоида: a*sin(b*x+c)+d\n";
+		cout << "Введите a ";
+		variables.a = ChekOnDouble();
+		cout << "Введите b ";
+		variables.b = ChekOnDouble();
+		cout << "Введите c ";
+		variables.c = ChekOnDouble();
+		cout << "Введите d ";
+		variables.c = ChekOnDouble();
+	}
+	else if (TaskNumber == 7) {
+		cout << "синусоида: a*cos(b*x+c)+d\n";
+		cout << "Введите a ";
+		variables.a = ChekOnDouble();
+		cout << "Введите b ";
+		variables.b = ChekOnDouble();
+		cout << "Введите c ";
+		variables.c = ChekOnDouble();
+		cout << "Введите d ";
 		variables.c = ChekOnDouble();
 	}
 }
@@ -153,6 +180,22 @@ void FunctionVisualization(int TaskNumber) {
 			tmpX = point.x;
 			tmpY = point.y;
 		}
+		else if (TaskNumber == 6) {
+			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
+		}
+		else if (TaskNumber == 7) {
+			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
+		}
 	}
 
 
@@ -239,14 +282,94 @@ void Integral(int TaskNumber) {
 	double sum, sum_integral = 0;
 	cout << "Нахождение определённого интеграла на отрезке:" << endl;
 	FunctionInput(TaskNumber, varb);
-	varb.x = varb.step + varb.A;
-	while (varb.x < varb.B) {
-		sum_integral += 2 * FunctionIntegral(sum, varb, TaskNumber);
-		varb.x += varb.step;
-		if (varb.x >= varb.B) break;
+
+
+
+}
+//------------------------------------------------------------
+double fsin(double A, double B, double C, double D, double x) {
+
+	return   A * sin(B * x + C) + D;
+}
+
+double fcos(double A, double B, double C, double D, double x) {
+
+	return   A * cos(B * x + C) + D;
+}
+
+void RootSin() {
+
+	double A, B, C, D;
+	double left, right, x, eps;
+
+	cout << "Коэффициенты уравнения синусоиды: " << endl;
+	cout << "A = "; cin >> A;
+	cout << "B = "; cin >> B;
+	cout << "C = "; cin >> C;
+	cout << "D = "; cin >> D;
+
+	cout << "Границы поиска корней: " << endl;
+	cout << "Левая граница = "; cin >> left;
+	cout << "Правая граница = "; cin >> right;
+	cout << "Точность = "; cin >> eps;
+
+	do {
+		x = (left + right) / 2;
+		if (fsin(A, B, C, D, x) * fsin(A, B, C, D, left) <= 0) right = x;
+		else left = x;
+	} while (fabs(left - right) >= eps);
+	cout << "X = " << x << "\n";
+}
+
+void RootCos() {
+
+	double A, B, C, D;
+	double left = -1, right = 1, x, eps = 0.1;
+	bool check = true;
+
+	cout << "Коэффициенты уравнения косинусоиды: " << endl;
+	cout << "A = "; cin >> A;
+	cout << "B = "; cin >> B;
+	cout << "C = "; cin >> C;
+	cout << "D = "; cin >> D;
+
+	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
+	do {
+		if (left >= 0) cout << "Левая граница введена неверно" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно" << endl;
+		cout << "Левая граница = "; cin >> left;
+		cout << "Правая граница = "; cin >> right;
+	} while (left >= 0 or right <= 0);
+
+	do {
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
+		cout << "Точность = "; cin >> eps;
+	} while (eps > 1 or eps <= 0);
+
+	do {
+		x = (left + right) / 2;
+		if (int(fcos(A, B, C, D, x)) != 0 and ((right - left) / 2) < eps) {
+			cout << "На данном отрезке функция не имеет корней" << endl;
+			check = false;
+			break;
+		}
+		if (fcos(A, B, C, D, x) * fcos(A, B, C, D, left) <= 0) right = x;
+		else left = x;
+	} while (fabs(left - right) >= eps);
+
+	if (check) cout << "X = " << x << "\n";
+}
+
+void RootSearch(int taskNumber) {
+	switch (taskNumber) {
+	case 0: break;
+	case 1: break;
+	case 2: break;
+	case 3: break;
+	case 6: RootSin(); break;
+	case 7: RootCos(); break;
+	default: break;
 	}
-	sum_integral *= varb.step / 3;
-	cout << "Интегрирование равно: " << sum_integral;
 }
 
 void functions(int  firstTaskNumber, int secondTaskNumber) {
@@ -254,6 +377,7 @@ void functions(int  firstTaskNumber, int secondTaskNumber) {
 	switch (firstTaskNumber) {
 	case 0: Integral(secondTaskNumber); break;
 	case 1: FunctionVisualization(secondTaskNumber); break;
+	case 2: RootSearch(secondTaskNumber); break;
 	/*case 0: PlacementRepeat(); break;
 	case 1: PlacementNoRepeat(); break;
 	case 2: CombinationRepeat(); break;
