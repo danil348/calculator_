@@ -5,33 +5,9 @@
 #include <conio.h>
 #include <Windows.h>
 #include "polynomial.h"
+#include "ChekOnRightOfNumber.h"
+
 using namespace std;
-
-//проверка на добл
-void ProvVodDouble(double& k) {
-	while (true) {
-		if (scanf_s("%lf", &k) == false || getchar() != '\n') {
-			while (getchar() != '\n');
-			cout << "Неверный ввод\n ";
-		}
-		else {
-			break;
-		}
-	}
-}
-
-//проверка на инт
-void ProvVodInt(int& k) {
-	while (true) {
-		if (scanf_s("%d", &k) == false || getchar() != '\n') {
-			while (getchar() != '\n');
-			cout << "Неверный ввод\n ";
-		}
-		else {
-			break;
-		}
-	}
-}
 
 //пров на кор. вода
 int ProvVod(int k) {
@@ -39,7 +15,7 @@ int ProvVod(int k) {
 	if (k == -1) {
 		do {
 			cout << "Введите n(0 < n < 10) = ";
-			cin >> a;
+			a = ChekOnInt();
 			if (a > 0 && a < 10)
 				prov = 1;
 			else
@@ -49,7 +25,7 @@ int ProvVod(int k) {
 	else {
 		do {
 			printf_s("N%d(N!=1) = ", k + 1);
-			ProvVodInt(a);
+			a = ChekOnInt();
 			if (a != 0)
 				prov = 1;
 			else
@@ -214,9 +190,9 @@ string Compose(vector <int>& v) {
 void AdditionOfPolynomials() {
 	int polyn_a[2], polyn_b[2], polyn_n[2], polyn_c[2];
 	cout << "Многочлен вида: ax^2+bx+c\n" << "Введите коэфиценты и степень для первого многочлена\n";
-	cout << "a = "; ProvVodInt(polyn_a[0]); cout << "b = "; ProvVodInt(polyn_b[0]); cout << "n = "; ProvVodInt(polyn_n[0]), cout << "c = "; ProvVodInt(polyn_c[0]);
+	cout << "a = "; polyn_a[0] = ChekOnInt(); cout << "b = "; polyn_b[0] = ChekOnInt(); cout << "n = "; polyn_n[0] = ChekOnInt(), cout << "c = "; polyn_c[0] = ChekOnInt();
 	cout << "Введите коэфиценты и степень для второго многочлена\n";
-	cout << "a = "; ProvVodInt(polyn_a[1]); cout << "b = "; ProvVodInt(polyn_b[1]); cout << "n = "; ProvVodInt(polyn_n[1]), cout << "c = "; ProvVodInt(polyn_c[1]);
+	cout << "a = "; polyn_a[1] = ChekOnInt(); cout << "b = "; polyn_b[1] = ChekOnInt(); cout << "n = "; polyn_n[1] = ChekOnInt(), cout << "c = "; polyn_c[1] = ChekOnInt();
 	if (polyn_n[0] == polyn_n[1] ) {
 		if (polyn_a[0] + polyn_a[1] != 0) {
 			if(polyn_n[0] != 0)
@@ -278,9 +254,9 @@ void AdditionOfPolynomials() {
 void PolynomialSubtraction() {
 	int polyn_a[2], polyn_b[2], polyn_n[2], polyn_c[2];
 	cout << "Многочлен вида: ax^2+bx+c\n" << "Введите коэфиценты и степень для первого многочлена\n";
-	cout << "a = "; ProvVodInt(polyn_a[0]); cout << "b = "; ProvVodInt(polyn_b[0]); cout << "n = "; ProvVodInt(polyn_n[0]), cout << "c = "; ProvVodInt(polyn_c[0]);
+	cout << "a = "; polyn_a[0] = ChekOnInt(); cout << "b = "; polyn_b[0] = ChekOnInt(); cout << "n = "; polyn_n[0] = ChekOnInt(), cout << "c = "; polyn_c[0] = ChekOnInt();
 	cout << "Введите коэфиценты и степень для второго многочлена\n";
-	cout << "a = "; ProvVodInt(polyn_a[1]); cout << "b = "; ProvVodInt(polyn_b[1]); cout << "n = "; ProvVodInt(polyn_n[1]), cout << "c = "; ProvVodInt(polyn_c[1]);;
+	cout << "a = "; polyn_a[1] = ChekOnInt(); cout << "b = "; polyn_b[1] = ChekOnInt(); cout << "n = "; polyn_n[1] = ChekOnInt(), cout << "c = "; polyn_c[1] = ChekOnInt();
 	if (polyn_n[0] == polyn_n[1]) {
 		if (polyn_a[0] - polyn_a[1] != 0) {
 			if (polyn_n[0] != 0)
@@ -411,13 +387,13 @@ void DerivativeOfaPolynomial() {
 	n = ProvVod(-1);
 	for (int i = 0; i < n; i++) {
 		printf_s("A%d = ", i + 1);
-		ProvVodInt(polyn_a[i]);
+		polyn_a[i]= ChekOnInt();
 		polyn_n[i] = ProvVod(1);
 	}
 	printf_s("B = ");
-	ProvVodInt(polyn_b);
+	polyn_b=  ChekOnInt();
 	printf_s("C = ");
-	ProvVodInt(polyn_c);
+	polyn_c = ChekOnInt();
 	for (int i = 0; i < n; i++) {
 		if (polyn_n[i] != 0 ) {
 			if (polyn_a[i] != 0) {
@@ -456,19 +432,19 @@ void DivisionOfPolynomials() {
 	int prov = 0, N1, N2;
 	cout << "Пример ввода множителей\n1 - A1X^N1+BX+C1\n2 - A2X^N2+C2\nПримечание все вводимые переменные не равны нулю, (N1-1)==N2, N1>=2\n";
 	do {
-		cout << "A1 = "; ProvVodDouble(A1);
+		cout << "A1 = "; A1 = ChekOnDouble();;
 		if (A1 != 0.0) {
-			cout << "N1 = "; ProvVodInt(N1);
+			cout << "N1 = "; N1= ChekOnInt();
 			if (N1 != 0 && N1>=2) {
-				cout << "B1 = "; ProvVodDouble(B1);
+				cout << "B1 = "; B1 = ChekOnDouble();
 				if (B1 != 0.0) {
-					cout << "C1 = ";ProvVodDouble(C1);
+					cout << "C1 = ";C1 = ChekOnDouble();
 					if (C1 != 0.0) {
-						cout << "A2 = "; ProvVodDouble(A2);
+						cout << "A2 = "; A2 = ChekOnDouble();
 						if (A2 != 0.0) {
-							cout << "N2 = "; ProvVodInt(N2);
+							cout << "N2 = "; N2 = ChekOnInt();
 							if (N1 - 1 == N2) {
-								cout << "C2 = "; ProvVodDouble(C2);
+								cout << "C2 = "; C2 = ChekOnDouble();
 								if (C2 != 0.0)
 									prov = 1;
 							}
