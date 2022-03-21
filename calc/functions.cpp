@@ -142,6 +142,10 @@ void ExtremesSearch(int TaskNumber) {
 
 	double* allMin = NULL;
 	double* allMax = NULL;
+	double possibleMinLeft = 0;
+	double possibleMaxLeft = 0;
+	double possibleMinRight = 0;
+	double possibleMaxRight = 0;
 	allMax = (double*)malloc(0 * sizeof(double));
 	allMin = (double*)malloc(0 * sizeof(double));
 	int countMax = 0;
@@ -182,12 +186,15 @@ void ExtremesSearch(int TaskNumber) {
 	}
 	else if (TaskNumber == 1) {
 		cout << "x = 0 экстремум";
+		flag = true;
 	}
 	else if (TaskNumber == 2) {
 		cout << "экстремумов нет";
+		flag = true;
 	}
 	else if (TaskNumber == 3) {
 		cout << "экстремумов нет";
+		flag = true;
 	}
 	else if (TaskNumber == 4) {
 		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func4(variables.A, variables);
@@ -213,6 +220,27 @@ void ExtremesSearch(int TaskNumber) {
 				flag = true;
 			}
 		}
+		if (hasMin == false) {
+			possibleMinLeft = func.func4(variables.A, variables);
+			possibleMinRight = func.func4(variables.B, variables);
+			if (possibleMinLeft >= possibleMinRight) {
+				cout << "min: x = " << variables.B << endl;
+			}
+			else {
+				cout << "min: x = " << variables.A << endl;
+			}
+		}
+		if (hasMax == false) {
+			possibleMaxLeft = func.func4(variables.A, variables);
+			possibleMaxRight = func.func4(variables.B, variables);
+			if (possibleMaxLeft <= possibleMaxRight) {
+				cout << "max: x = " << variables.B << endl;
+			}
+			else {
+				cout << "max: x = " << variables.A << endl;
+			}
+		}
+		flag = true;
 	}
 	else if (TaskNumber == 5) {
 		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func5(variables.A, variables);
@@ -238,6 +266,27 @@ void ExtremesSearch(int TaskNumber) {
 				flag = true;
 			}
 		}
+		if (hasMin == false) {
+			possibleMinLeft = func.func5(variables.A, variables);
+			possibleMinRight = func.func5(variables.B, variables);
+			if (possibleMinLeft >= possibleMinRight) {
+				cout << "min: x = " << variables.B << endl;
+			}
+			else {
+				cout << "min: x = " << variables.A << endl;
+			}
+		}
+		if (hasMax == false) {
+			possibleMaxLeft = func.func5(variables.A, variables);
+			possibleMaxRight = func.func5(variables.B, variables);
+			if (possibleMaxLeft <= possibleMaxRight) {
+				cout << "max: x = " << variables.B << endl;
+			}
+			else {
+				cout << "max: x = " << variables.A << endl;
+			}
+		}
+		flag = true;
 	}
 
 	if (hasMin == true) {
