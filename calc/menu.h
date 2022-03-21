@@ -76,4 +76,3 @@ private:
 	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
 		"показательная: a*ln(b*x)+c","синусоида: a*sin(b*x+c)+d","косинусоида: a*cos(b*x+c)+d" };
 };
-

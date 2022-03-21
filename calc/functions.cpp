@@ -1,13 +1,11 @@
 #pragma once
 #include "functions.h"
 #include "ChekOnRightOfNumber.h"
-#include <Windows.h>
-#include <SDL_syswm.h>
 
 #define WIDTH 1500
 #define HEIGTH 800
 
-#define SEGMENT 100
+#define SEGMENT 40
 #define OFFSET_X HEIGTH / 2
 #define OFFSET_Y WIDTH / 2
 
@@ -20,20 +18,16 @@ struct Variables
 	double a, b, x, c, d;
 };
 
-struct Extr
-{
-	double min[2];
-	double max[2];
-};
-
-
 struct Func
 {
 	double func1(double x, Variables& variables) {
 		return variables.a * variables.b * pow(x, variables.b);
 	}
 	double func4(double x, Variables& variables) {
-		return variables.a * variables.b * cos(variables.b * x + variables.c);
+		return variables.a * sin(variables.b * x + variables.c) + variables.d;
+	}
+	double func5(double x, Variables& variables) {
+		return variables.a * cos(variables.b * x + variables.c) + variables.d;
 	}
 };
 
@@ -47,6 +41,13 @@ struct WindowName
 	u8"график синусоиды",
 	u8"график косинусоиды"
 	};
+};
+
+struct Extr
+{
+	double min[2];
+	double max[2];
+	double tmpdots[3];
 };
 
 void EnteringTask(int TaskNumber, Variables &variables) {
@@ -126,9 +127,19 @@ void ExtremesSearch(int TaskNumber) {
 	double min = 0;
 	double eps = 0;
 	bool flag = false;
-	cout << "введите левую границу";
+
+	double* allMin = NULL;
+	double* allMax = NULL;
+	allMax = (double*)malloc(0 * sizeof(double));
+	allMin = (double*)malloc(0 * sizeof(double));
+	int countMax = 0;
+	int countMin = 0;
+	bool hasMin = false;
+	bool hasMax = false;
+
+	cout << "введите левую границу ";
 	variables.A = ChekOnDouble();
-	cout << "введите правую границу";
+	cout << "введите правую границу ";
 	variables.B = ChekOnDouble();
 
 	EnteringTask(TaskNumber, variables);
@@ -144,39 +155,89 @@ void ExtremesSearch(int TaskNumber) {
 	else if (TaskNumber == 3) {
 		cout << "экстремумов нет";
 	}
-	//else if (TaskNumber == 4) {
-	//	double tmpAns;
-	//	extr.min[1] = func.func4(variables.A, variables);
-	//	extr.max[1] = func.func4(variables.A, variables);
-	//	for (int i = variables.A+1; i < variables.B; i+=0.1) {
-	//		tmpAns = func.func4(i, variables);
-	//		if (extr.min[1] > tmpAns) {
-	//			extr.min[0] = extr.min[1];
-	//			extr.min[1] = tmpAns;
-	//		}
-	//		else if(extr.max[1] < tmpAns) {
-	//			extr.max[0] = extr.max[1];
-	//			extr.max[1] = tmpAns;
-	//		}
-	//		else {
-	//			cout << i << " ";
-	//		}
-	//		/*if (extr.max[1] < tmpAns) {
-	//			extr.max[0] = extr.max[1];
-	//			extr.max[1] = tmpAns;
-	//		}
-	//		else {
-	//			cout << i;
-	//		}*/
-	//		/*if (func.func1(i, variables) == 0) {
-	//			cout << "x = " << i << "\n";
-	//			flag = true;
-	//		}*/
-	//	}
-	//}
-	/*else if (TaskNumber == 5) 
+	else if (TaskNumber == 4) {
+		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func4(variables.A, variables);
+		for (double i = variables.A + 0.01; i < variables.B; i += 0.001) {
+			extr.tmpdots[0] = extr.tmpdots[1];
+			extr.tmpdots[1] = extr.tmpdots[2];
+			extr.tmpdots[2] = func.func4(i, variables);
+			if (extr.tmpdots[0] < extr.tmpdots[1] && extr.tmpdots[1] > extr.tmpdots[2] &&
+				extr.tmpdots[2] != extr.tmpdots[0] && extr.tmpdots[2] != extr.tmpdots[1]) {
+				countMax++;
+				allMax = (double*)realloc(allMax, countMax * sizeof(double));
+				allMax[countMax - 1] = i;
 
-	}*/
+				hasMax = true;
+				flag = true;
+			}
+			else if (extr.tmpdots[0] > extr.tmpdots[1] && extr.tmpdots[1] < extr.tmpdots[2]) {
+				countMin++;
+				allMin = (double*)realloc(allMin, countMin * sizeof(double));
+				allMin[countMin - 1] = i;
+
+				hasMin = true;
+				flag = true;
+			}
+		}
+	}
+	else if (TaskNumber == 5) {
+		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func5(variables.A, variables);
+		for (double i = variables.A + 0.01; i < variables.B; i += 0.001) {
+			extr.tmpdots[0] = extr.tmpdots[1];
+			extr.tmpdots[1] = extr.tmpdots[2];
+			extr.tmpdots[2] = func.func5(i, variables);
+			if (extr.tmpdots[0] < extr.tmpdots[1] && extr.tmpdots[1] > extr.tmpdots[2] && 
+				extr.tmpdots[2] != extr.tmpdots[0] && extr.tmpdots[2] != extr.tmpdots[1]) {
+				countMax++;
+				allMax = (double*)realloc(allMax, countMax * sizeof(double));
+				allMax[countMax - 1] = i;
+
+				hasMax = true;
+				flag = true;
+			}
+			else if (extr.tmpdots[0] > extr.tmpdots[1] && extr.tmpdots[1] < extr.tmpdots[2]) {
+				countMin++;
+				allMin = (double*)realloc(allMin, countMin * sizeof(double));
+				allMin[countMin - 1] = i;
+
+				hasMin = true;
+				flag = true;
+			}
+		}
+	}
+
+	if (hasMin == true) {
+		if (allMin[countMin - 1] < 0) {
+			cout << "min: x = " << allMin[countMin - 1] << endl;
+		}
+		else if (allMin[0] > 0) {
+			cout << "min: x = " << allMin[countMin - 1] << endl;
+		}
+		else {
+			for (int k = 0; k < countMin; k++) {
+				if (allMin[k] > 0) {
+					cout << "min: x = " << allMin[k] << endl;
+					break;
+				}
+			}
+		}
+	}
+	if (hasMax == true) {
+		if (allMax[countMax - 1] < 0) {
+			cout << "max: x = " << allMax[countMax - 1] << endl;
+		}
+		else if (allMax[0] > 0) {
+			cout << "max: x = " << allMax[countMax - 1] << endl;
+		}
+		else {
+			for (int k = 0; k < countMax - 1; k++) {
+				if (allMax[k] > 0) {
+					cout << "max: x = " << allMax[k] << endl;
+					break;
+				}
+			}
+		}
+	}
 	if (flag == false) {
 		cout << "Ёкстремумов нет";
 	}
@@ -194,9 +255,14 @@ void FunctionVisualization(int TaskNumber) {
 	SDL_Point point = { 0,0 };
 	WindowName windowName;
 	SDL_Event event;
-	HWND hWnd;
+	HWND hWnd; 
+	SDL_Renderer* renderer;
+	SDL_Window* window;
 	event.key.keysym.scancode = SDL_SCANCODE_0;
 	event.type = NULL;
+	int tmpX = 0;
+	int tmpY = 0;
+	int sum = 0;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("SDL Error: %S", SDL_GetError());
@@ -204,16 +270,16 @@ void FunctionVisualization(int TaskNumber) {
 
 	EnteringTask(TaskNumber, variables);
 	
-	SDL_Window* window = SDL_CreateWindow(windowName.name[TaskNumber].c_str(), 55, 55, WIDTH, HEIGTH, SDL_WINDOW_SHOWN);
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	window = SDL_CreateWindow(windowName.name[TaskNumber].c_str(), 55, 55, WIDTH, HEIGTH, SDL_WINDOW_SHOWN);
+	renderer = SDL_CreateRenderer(window, -1, 0);
 	hWnd = GetWindowHWND(window);
-	
 	SDL_SetWindowInputFocus(window);
 
 	SDL_RenderClear(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
 
+	SDL_RenderDrawLine(renderer, WIDTH / 2, 0, WIDTH / 2, HEIGTH);
 	SDL_RenderDrawLine(renderer, 0, HEIGTH / 2, WIDTH, HEIGTH / 2);
 	
 	for (int i = OFFSET_Y; i > 0; i--) {
@@ -236,7 +302,6 @@ void FunctionVisualization(int TaskNumber) {
 	}
 
 
-	SDL_RenderDrawLine(renderer, WIDTH/2, 0, WIDTH/2, HEIGTH);
 
 	for (int i = OFFSET_X; i < HEIGTH; i++) {
 		point.y = i;
@@ -257,9 +322,6 @@ void FunctionVisualization(int TaskNumber) {
 		}
 	}
 	
-	int tmpX = 0;
-	int tmpY = 0;
-	int sum = 0;
 	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
 		point.x = i + WIDTH / 2;
 		if (TaskNumber == 0) {
@@ -327,7 +389,7 @@ void FunctionVisualization(int TaskNumber) {
 
 	while (true) {
 		if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE ||
-			event.key.keysym.scancode == SDL_SCANCODE_RETURN || 
+			event.key.keysym.scancode == SDL_SCANCODE_RETURN ||
 			event.type == SDL_QUIT) {
 			break;
 		}
