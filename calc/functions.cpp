@@ -1,7 +1,8 @@
 #pragma once
 #include "functions.h"
 #include "ChekOnRightOfNumber.h"
-
+#include <Windows.h>
+#include <SDL_syswm.h>
 
 #define WIDTH 1500
 #define HEIGTH 800
@@ -180,11 +181,22 @@ void ExtremesSearch(int TaskNumber) {
 		cout << "Ёкстремумов нет";
 	}
 }
+HWND GetWindowHWND(SDL_Window* wnd)
+{
+	SDL_SysWMinfo sysInfo;
+	SDL_VERSION(&sysInfo.version);
+	SDL_GetWindowWMInfo(wnd, &sysInfo);
+	return sysInfo.info.win.window;
+}
 
 void FunctionVisualization(int TaskNumber) {
 	Variables variables;
 	SDL_Point point = { 0,0 };
 	WindowName windowName;
+	SDL_Event event;
+	HWND hWnd;
+	event.key.keysym.scancode = SDL_SCANCODE_0;
+	event.type = NULL;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("SDL Error: %S", SDL_GetError());
@@ -194,6 +206,9 @@ void FunctionVisualization(int TaskNumber) {
 	
 	SDL_Window* window = SDL_CreateWindow(windowName.name[TaskNumber].c_str(), 55, 55, WIDTH, HEIGTH, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	hWnd = GetWindowHWND(window);
+	
+	SDL_SetWindowInputFocus(window);
 
 	SDL_RenderClear(renderer);
 
@@ -308,12 +323,21 @@ void FunctionVisualization(int TaskNumber) {
 		}
 	}
 
+	SetForegroundWindow(hWnd);
 
-	SDL_RenderPresent(renderer);
-	SDL_Delay(60000);
+	while (true) {
+		if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE ||
+			event.key.keysym.scancode == SDL_SCANCODE_RETURN || 
+			event.type == SDL_QUIT) {
+			break;
+		}
+		SDL_PollEvent(&event);
+		SDL_RenderPresent(renderer);
+	}
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+	Sleep(50);
 }
 
 void FunctionInput(int TaskNumber, Variables& varb) {
