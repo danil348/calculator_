@@ -44,7 +44,7 @@ private:
 
 	int activeTheoryMenu = 0;
 	static const int TheoryMenuSize = 3;
-	string TheoryMenu[TheoryMenuSize] = { "вероятность ", "дисперсия", "мат ожидание" };
+	string TheoryMenu[TheoryMenuSize] = { "вероятность", "дисперсия", "мат ожидание" };
 
 	int activeFractionsMenu = 0;
 	static const int FractionsMenuSize = 7;

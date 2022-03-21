@@ -1,12 +1,12 @@
 #pragma once
 #include "functions.h"
 #include "ChekOnRightOfNumber.h"
-#include <math.h>
+
 
 #define WIDTH 1500
 #define HEIGTH 800
 
-#define SEGMENT 80
+#define SEGMENT 100
 #define OFFSET_X HEIGTH / 2
 #define OFFSET_Y WIDTH / 2
 
@@ -14,9 +14,38 @@ struct Variables
 { 
 	double A, B;
 	double step;
-	double arrA[100];
+	double arrA[100] = { 0 };
 	int N;
 	double a, b, x, c, d;
+};
+
+struct Extr
+{
+	double min[2];
+	double max[2];
+};
+
+
+struct Func
+{
+	double func1(double x, Variables& variables) {
+		return variables.a * variables.b * pow(x, variables.b);
+	}
+	double func4(double x, Variables& variables) {
+		return variables.a * variables.b * cos(variables.b * x + variables.c);
+	}
+};
+
+struct WindowName
+{
+	string name[6] = {
+	u8"график полинома",
+	u8"график степенной",
+	u8"график показательной",
+	u8"график логарифмической",
+	u8"график синусоиды",
+	u8"график косинусоиды"
+	};
 };
 
 void EnteringTask(int TaskNumber, Variables &variables) {
@@ -27,8 +56,8 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 			variables.N = ChekOnInt();
 			if (variables.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
 			if (variables.N == 0) cout << "Степень полинома не может быть равна нулю! Повторите попытку: ";
-			if (variables.N > 100) cout << "Ограничение степени в 100! Повторите попытку: ";
-		} while (variables.N <= 0 || variables.N > 100);
+			if (variables.N > 10) cout << "Ограничение степени в 100! Повторите попытку: ";
+		} while (variables.N <= 2 || variables.N > 10);
 		cout << "Введите переменные a:\n";
 		for (int i = 0; i < variables.N; i++) {
 			cout << "a" << i + 1 << ": ";
@@ -56,7 +85,7 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		variables.d = ChekOnDouble();
 	}
 	else if (TaskNumber == 3) {
-		cout << "показательная: a*ln(b*x)+c\n";
+		cout << "логарифмическая: a*ln(b*x)+c\n";
 		cout << "Введите a ";
 		variables.a = ChekOnDouble();
 		cout << "Введите b ";
@@ -88,25 +117,11 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 	}
 }
 
-struct Func
-{
-	double func1(double x, Variables &variables) {
-		return variables.a * variables.b * pow(x, variables.b);
-	}
-	double func2(double x, Variables& variables) {
-		return variables.a * variables.c * pow(variables.b, variables.c * x) * log(variables.b);
-	}
-	double func3(double x, Variables& variables) {
-		return variables.a / x;
-	}
-	double func4(double x, Variables& variables) {
-		return variables.a * variables.b * cos(variables.b * x + variables.c);
-	}
-};
 
 void ExtremesSearch(int TaskNumber) {
 	Variables variables;
 	Func func;
+	Extr extr;
 	double min = 0;
 	double eps = 0;
 	bool flag = false;
@@ -120,32 +135,47 @@ void ExtremesSearch(int TaskNumber) {
 
 	}
 	else if (TaskNumber == 1) {
-		double tmpAns;
-		for (int i = variables.A; i < variables.B; i++) {
-			if (func.func1(i, variables) == 0) {
-				cout << "x = " << i << "\n"; 
-				flag = true;
-			}
-		}
+		cout << "x = 0 экстремум";
 	}
 	else if (TaskNumber == 2) {
-		double tmpAns;
-		for (int i = variables.A; i < variables.B; i++) {
-			if (func.func2(i, variables) == 0) {
-				cout << "x = " << i << "\n";
-				flag = true;
-			}
-		}
+		cout << "экстремумов нет";
 	}
 	else if (TaskNumber == 3) {
-		double tmpAns;
-		for (int i = variables.A; i < variables.B; i++) {
-			if (func.func3(i, variables) == 0) {
-				cout << "x = " << i << "\n";
-				flag = true;
-			}
-		}
+		cout << "экстремумов нет";
 	}
+	//else if (TaskNumber == 4) {
+	//	double tmpAns;
+	//	extr.min[1] = func.func4(variables.A, variables);
+	//	extr.max[1] = func.func4(variables.A, variables);
+	//	for (int i = variables.A+1; i < variables.B; i+=0.1) {
+	//		tmpAns = func.func4(i, variables);
+	//		if (extr.min[1] > tmpAns) {
+	//			extr.min[0] = extr.min[1];
+	//			extr.min[1] = tmpAns;
+	//		}
+	//		else if(extr.max[1] < tmpAns) {
+	//			extr.max[0] = extr.max[1];
+	//			extr.max[1] = tmpAns;
+	//		}
+	//		else {
+	//			cout << i << " ";
+	//		}
+	//		/*if (extr.max[1] < tmpAns) {
+	//			extr.max[0] = extr.max[1];
+	//			extr.max[1] = tmpAns;
+	//		}
+	//		else {
+	//			cout << i;
+	//		}*/
+	//		/*if (func.func1(i, variables) == 0) {
+	//			cout << "x = " << i << "\n";
+	//			flag = true;
+	//		}*/
+	//	}
+	//}
+	/*else if (TaskNumber == 5) 
+
+	}*/
 	if (flag == false) {
 		cout << "Экстремумов нет";
 	}
@@ -154,24 +184,23 @@ void ExtremesSearch(int TaskNumber) {
 void FunctionVisualization(int TaskNumber) {
 	Variables variables;
 	SDL_Point point = { 0,0 };
+	WindowName windowName;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("SDL Error: %S", SDL_GetError());
 	}
 
 	EnteringTask(TaskNumber, variables);
-
-	SDL_Window* window = SDL_CreateWindow(u8"Привет! Русский заголовок!", 55, 55, WIDTH, HEIGTH, SDL_WINDOW_SHOWN);
+	
+	SDL_Window* window = SDL_CreateWindow(windowName.name[TaskNumber].c_str(), 55, 55, WIDTH, HEIGTH, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
 	SDL_RenderClear(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-	point.y = OFFSET_X;
-	for (int i = 0; i < WIDTH; i++) {
-		point.x = i;
-		SDL_RenderDrawPoint(renderer, point.x, point.y);
-	}
+
+	SDL_RenderDrawLine(renderer, 0, HEIGTH / 2, WIDTH, HEIGTH / 2);
+	
 	for (int i = OFFSET_Y; i > 0; i--) {
 		point.x = i;
 		if ((OFFSET_Y - i) % SEGMENT == 0) {
@@ -192,12 +221,8 @@ void FunctionVisualization(int TaskNumber) {
 	}
 
 
+	SDL_RenderDrawLine(renderer, WIDTH/2, 0, WIDTH/2, HEIGTH);
 
-	point.x = OFFSET_Y;
-	for (int i = 0; i < HEIGTH; i++) {
-		point.y = i;
-		SDL_RenderDrawPoint(renderer, point.x, point.y);
-	}
 	for (int i = OFFSET_X; i < HEIGTH; i++) {
 		point.y = i;
 		if ((OFFSET_X - i) % SEGMENT == 0) {
@@ -223,7 +248,22 @@ void FunctionVisualization(int TaskNumber) {
 	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
 		point.x = i + WIDTH / 2;
 		if (TaskNumber == 0) {
-
+			for (int j = 0; j < variables.N; j++) {
+				if (j == 0) {
+					point.y += variables.arrA[j] * SEGMENT;
+				}
+				else {
+					point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
+					//point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
+				}
+			}
+			point.y = -point.y + HEIGTH / 2;
+			if (i != -WIDTH / 2) {
+				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
+			}
+			tmpX = point.x;
+			tmpY = point.y;
+			point.y = 0;
 		}
 		else if (TaskNumber == 1) {
 			point.y = -(variables.a * pow(i, variables.b)) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
@@ -243,7 +283,7 @@ void FunctionVisualization(int TaskNumber) {
 			tmpY = point.y;
 		}
 		else if (TaskNumber == 3) {
-			point.y = -variables.a * log(variables.b * double(i)/SEGMENT) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			point.y = -variables.a * log(variables.b * double(i) / SEGMENT) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
@@ -270,7 +310,7 @@ void FunctionVisualization(int TaskNumber) {
 
 
 	SDL_RenderPresent(renderer);
-	SDL_Delay(8000);
+	SDL_Delay(60000);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
