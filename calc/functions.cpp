@@ -20,6 +20,18 @@ struct Variables
 
 struct Func
 {
+	double func0(double x, Variables& variables) {
+		double sum = 0;
+		for (int j = 0; j < variables.N; j++) {
+			if (j == 0) {
+				sum += variables.arrA[j];
+			}
+			else {
+				sum += variables.arrA[j] * pow(x,j);
+			}
+		}
+		return sum;
+	}
 	double func1(double x, Variables& variables) {
 		return variables.a * variables.b * pow(x, variables.b);
 	}
@@ -53,7 +65,7 @@ struct Extr
 void EnteringTask(int TaskNumber, Variables &variables) {
 	if (TaskNumber == 0) {
 		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
-		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		cout << "Введите N не больше 10 (от N будет зависить количество переменных a):";
 		do {
 			variables.N = ChekOnInt();
 			if (variables.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
@@ -144,7 +156,29 @@ void ExtremesSearch(int TaskNumber) {
 
 	EnteringTask(TaskNumber, variables);
 	if (TaskNumber == 0) {
+		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func0(variables.A, variables);
+		for (double i = variables.A + 0.01; i < variables.B; i += 0.001) {
+			extr.tmpdots[0] = extr.tmpdots[1];
+			extr.tmpdots[1] = extr.tmpdots[2];
+			extr.tmpdots[2] = func.func0(i, variables);
+			if (extr.tmpdots[0] < extr.tmpdots[1] && extr.tmpdots[1] > extr.tmpdots[2] &&
+				extr.tmpdots[2] != extr.tmpdots[0] && extr.tmpdots[2] != extr.tmpdots[1]) {
+				countMax++;
+				allMax = (double*)realloc(allMax, countMax * sizeof(double));
+				allMax[countMax - 1] = i;
 
+				hasMax = true;
+				flag = true;
+			}
+			else if (extr.tmpdots[0] > extr.tmpdots[1] && extr.tmpdots[1] < extr.tmpdots[2]) {
+				countMin++;
+				allMin = (double*)realloc(allMin, countMin * sizeof(double));
+				allMin[countMin - 1] = i;
+
+				hasMin = true;
+				flag = true;
+			}
+		}
 	}
 	else if (TaskNumber == 1) {
 		cout << "x = 0 экстремум";
@@ -230,7 +264,7 @@ void ExtremesSearch(int TaskNumber) {
 			cout << "max: x = " << allMax[countMax - 1] << endl;
 		}
 		else {
-			for (int k = 0; k < countMax - 1; k++) {
+			for (int k = 0; k < countMax; k++) {
 				if (allMax[k] > 0) {
 					cout << "max: x = " << allMax[k] << endl;
 					break;
@@ -331,7 +365,6 @@ void FunctionVisualization(int TaskNumber) {
 				}
 				else {
 					point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
-					//point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
 				}
 			}
 			point.y = -point.y + HEIGTH / 2;
