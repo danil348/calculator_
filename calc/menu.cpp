@@ -125,6 +125,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 						ConsoleCursorVisible(false);
 						cout << "\n\nнажмите Enter чтобы вернуться к выбору действий\n";
 						activeFunctionsDopMenu = 0;
+						cmd = ' ';
 						break;
 					case UP:
 						if (activeFunctionsDopMenu > 0) {

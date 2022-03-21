@@ -44,7 +44,7 @@ private:
 
 	int activeTheoryMenu = 0;
 	static const int TheoryMenuSize = 3;
-	string TheoryMenu[TheoryMenuSize] = { "вероятность", "дисперсия", "мат ожидание" };
+	string TheoryMenu[TheoryMenuSize] = { "вероятность", "дисперсия", "мат. ожидание" };
 
 	int activeFractionsMenu = 0;
 	static const int FractionsMenuSize = 7;
@@ -68,11 +68,11 @@ private:
 
 	int activeFunctionsMenu = 0;
 	static const int FunctionsMenuSize = 4;
-	string FunctionsMenu[FunctionsMenuSize] = { "вычисление определённого интеграла на отрезке", "построение графика функции", "поиск корня Y=0 на отрезке",
-		"поиск экстремумов на отрезке" };
+	string FunctionsMenu[FunctionsMenuSize] = { "вычисление определённого интеграла на отрезке", "построение графика функции", 
+		"поиск корня Y=0 на отрезке", "поиск экстремумов на отрезке" };
 
 	int activeFunctionsDopMenu = 0;
 	static const int FunctionsDopMenuSize = 6;
-	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", "показательная: a*b^(c*x)+d",
-		"показательная: a*ln(b*x)+c","синусоида: a*sin(b*x+c)+d","косинусоида: a*cos(b*x+c)+d" };
+	string FunctionsDopMenu[FunctionsDopMenuSize] = { "полином степени N: a0+a1*x+a2*x^2+...aN*x^N", "степенная: a*x^b+c", 
+		"показательная: a*b^(c*x)+d", "показательная: a*ln(b*x)+c","синусоида: a*sin(b*x+c)+d","косинусоида: a*cos(b*x+c)+d" };
 };
