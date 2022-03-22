@@ -129,6 +129,7 @@ vector <int> Multiplicate(vector <int>& a, vector <int>& b) {
 int Prov(string& s) {
 	string a = "qwertyuiopasdfghjklzcvbnm-йцукенгшщзхъфывапролджэячсмитьбю";
 	string A = "QWERTYUIOPASDFGHJKLZCVBNM-ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
+	string B = "1234567890";
 	int i = 0, n = 0, n1 = 0;
 	while (i < s.size()) {
 		if ((s[i] == 'x' || s[i] == 'X') && n == 0) {
@@ -137,24 +138,42 @@ int Prov(string& s) {
 		for (int j = 0; j < 59; j++)
 		{
 			if (s[i] == a[j]) {
-				n += 2;
+				n += 3;
 				break;
 			}
 		}
 		for (int j = 0; j < 59; j++)
 		{
 			if (s[i] == A[j]) {
-				n += 2;
+				n += 3;
 				break;
 			}
 		}
+		if (s[i] == '^') {
+			int cl = 0;
+			for (int j = 0; j < 10; j++) {
+				if (s[i + 1] == B[j]) {
+					cl++;
+					break;
+				}
+			}
+			for (int j = 0; j < 10; j++) {
+				if (s[i + 2] == B[j]) {
+					cl++;
+					break;
+				}
+			}
+			if (cl > 1)
+				n += 3;
+		}
 		if (s[i] == ' ' && s[i] == '.' && s[i] == ' ' && s[i] == '?' && s[i] == '!' && s[i] == ',' && s[i] == ':') {
-			n+=2;
+			n+=3;
 			break;
 		}
-		if (n > 2)
+		if (n >= 2)
 			break;
-		i++;
+		else
+			i++;
 	}
 	return n;
 }
@@ -189,7 +208,7 @@ string Compose(vector <int>& v) {
 //сложение многочленов
 void AdditionOfPolynomials() {
 	int polyn_a[2], polyn_b[2], polyn_n[2], polyn_c[2];
-	cout << "Многочлен вида ax^2+bx+c:\n" << "Введите коэфиценты и степень для первого многочлена: \n";
+	cout << "Многочлен вида ax^n+bx+c:\n" << "Введите коэфиценты и степень для первого многочлена: \n";
 	cout << "Введите a: "; polyn_a[0] = ChekOnInt(); cout << "Введите b: "; polyn_b[0] = ChekOnInt(); cout << "Введите n: "; polyn_n[0] = ChekOnInt(), cout << "Введите c: "; polyn_c[0] = ChekOnInt();
 	cout << "Введите коэфиценты и степень для второго многочлена: \n";
 	cout << "Введите a: "; polyn_a[1] = ChekOnInt(); cout << "Введите b: "; polyn_b[1] = ChekOnInt(); cout << "Введите n: "; polyn_n[1] = ChekOnInt(), cout << "Введите c: "; polyn_c[1] = ChekOnInt();
@@ -253,7 +272,7 @@ void AdditionOfPolynomials() {
 //вычитание многочленов
 void PolynomialSubtraction() {
 	int polyn_a[2], polyn_b[2], polyn_n[2], polyn_c[2];
-	cout << "Многочлен вида ax^2+bx+c:\n" << "Введите коэфиценты и степень для первого многочлена:\n";
+	cout << "Многочлен вида ax^n+bx+c:\n" << "Введите коэфиценты и степень для первого многочлена:\n";
 	cout << "Введите a: "; polyn_a[0] = ChekOnInt(); cout << "Введите b: "; 
 	polyn_b[0] = ChekOnInt(); cout << "Введите n: "; polyn_n[0] = ChekOnInt(), cout << "Введите c: "; polyn_c[0] = ChekOnInt();
 	cout << "Введите коэфиценты и степень для второго многочлена:\n";
@@ -323,7 +342,7 @@ void PolynomialMultiplication() {
 	vector <int> a_decomposed(11, 0);
 	vector <int> b_decomposed(11, 0);
 	do {
-		cout << "Пример ввода: 3x^2+5x+6\n";
+		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 0\n";
 		cout << "Введите первый многочлен:\n";
 		getline(cin, a);
 		col += Prov(a);
@@ -370,7 +389,7 @@ void MultiplicationByNumber() {
 			k = 1;
 		else {
 			col = 0;
-			cout << "Неверный ввод многочелна! Повоторите попытку.\n";
+			cout << "Неверный ввод ! Повоторите попытку.\n";
 		}
 	} while (k == 0);
 	a_decomposed = Decompose(a);
@@ -432,7 +451,7 @@ void DerivativeOfaPolynomial() {
 void DivisionOfPolynomials() {
 	double A1, A2, B1, C1, C2, A3,N3,B3,C3;
 	int prov = 0, N1, N2;
-	cout << "Пример ввода множителей:\n1 - A1X^N1+BX+C1\n2 - A2X^N2+C2\nПримечание все вводимые переменные не равны нулю, (N1-1)==N2, N1>=2\n";
+	cout << "Пример ввода множителей:\n1 - A1X^N1+BX+C1\n2 - A2X^N2+C2\nПримечание все вводимые переменные не равны нулю, (N1-1) равно N2, N1>=2\n";
 	do {
 		cout << "Введите A1: "; A1 = ChekOnDouble();;
 		if (A1 != 0.0) {
