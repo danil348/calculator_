@@ -127,8 +127,8 @@ vector <int> Multiplicate(vector <int>& a, vector <int>& b) {
 
 //ןנמגונךא םא מרטבךף ג לםמדמקכוםו
 int Prov(string& s) {
-	string a = "qwertyuiopasdfghjklzcvbnm-יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏";
-	string A = "QWERTYUIOPASDFGHJKLZCVBNM-ÉÖÓÊÅÍÃØÙÇÕÚÔÛÂÀÏÐÎËÄÆÝ‗×ÑÌÈÒÜÁÞ";
+	string a = "qwertyuiopasdfghjklzcvbnmיצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏";
+	string A = "QWERTYUIOPASDFGHJKLZCVBNMÉÖÓÊÅÍÃØÙÇÕÚÔÛÂÀÏÐÎËÄÆÝ‗×ÑÌÈÒÜÁÞ";
 	string B = "1234567890";
 	int i = 0, n = 0, n1 = 0;
 	while (i < s.size()) {
@@ -142,15 +142,17 @@ int Prov(string& s) {
 		if (i > 0) {
 			if (s[i - 1] == 'x' && s[i - 1] == 'X' && s[i - 1] == s[i])
 				n += 3;
+			if ((s[i] == '-' && s[i] == '+') || (s[i] == '+' && s[i] == '-'))
+				n += 3;
 		}
-		for (int j = 0; j < 59; j++)
+		for (int j = 0; j < 58; j++)
 		{
 			if (s[i] == a[j]) {
 				n += 3;
 				break;
 			}
 		}
-		for (int j = 0; j < 59; j++)
+		for (int j = 0; j < 58; j++)
 		{
 			if (s[i] == A[j]) {
 				n += 3;
@@ -159,6 +161,9 @@ int Prov(string& s) {
 		}
 		if (s[i] == '^') {
 			int cl = 0;
+			if (s[i] == '-') {
+				n += 3;
+			}
 			for (int j = 0; j < 10; j++) {
 				if (s[i + 1] == B[j]) {
 					cl++;
