@@ -9,8 +9,7 @@
 #define OFFSET_X HEIGTH / 2
 #define OFFSET_Y WIDTH / 2
 
-struct Variables
-{ 
+struct Variables { 
 	double A, B;
 	double step;
 	double arrA[100] = { 0 };
@@ -18,8 +17,7 @@ struct Variables
 	double a, b, x, c, d;
 };
 
-struct Func
-{
+struct Func {
 	double func0(double x, Variables& variables) {
 		double sum = 0;
 		for (int j = 0; j < variables.N; j++) {
@@ -43,8 +41,7 @@ struct Func
 	}
 };
 
-struct WindowName
-{
+struct WindowName {
 	string name[6] = {
 	u8"График полинома",
 	u8"График степенной",
@@ -55,8 +52,7 @@ struct WindowName
 	};
 };
 
-struct Extr
-{
+struct Extr {
 	double min[2];
 	double max[2];
 	double tmpdots[3];
@@ -408,7 +404,6 @@ void FunctionVisualization(int TaskNumber) {
 			}
 		}
 	}
-	
 	for (int i = -WIDTH/2; i < WIDTH/2; i++) {
 		point.x = i + WIDTH / 2;
 		if (TaskNumber == 0) {
@@ -421,7 +416,9 @@ void FunctionVisualization(int TaskNumber) {
 				}
 			}
 			point.y = -point.y + HEIGTH / 2;
-			if (i != -WIDTH / 2) {
+
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
@@ -429,21 +426,26 @@ void FunctionVisualization(int TaskNumber) {
 			point.y = 0;
 		}
 		else if (TaskNumber == 1) {
-			if (i < 0 && (variables.b - int(variables.b)) != 0 ){
-				point.y = -(variables.a * pow(abs(i), variables.b) * pow(-1,int(variables.b))) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
-			}
-			else
-				point.y = -(variables.a * pow(i, variables.b) ) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
 			
-			if (i != -WIDTH / 2) {
+			if (i < 0 && (variables.b - int(variables.b)) != 0 ){
+				point.y = -(variables.a * pow(abs(double(i)) / SEGMENT, variables.b))* pow(-1, int(variables.b)) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			}
+			else {
+				point.y = -(variables.a * pow(double(i) / SEGMENT, variables.b)) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			}
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
+
 			tmpX = point.x;
 			tmpY = point.y;
 		}
 		else if (TaskNumber == 2) {
 			point.y = -variables.a * pow(variables.b, (variables.c * (double(i) / SEGMENT))) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
-			if (i != -WIDTH / 2) {
+
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
@@ -451,7 +453,9 @@ void FunctionVisualization(int TaskNumber) {
 		}
 		else if (TaskNumber == 3) {
 			point.y = -variables.a * log(variables.b * double(i) / SEGMENT) * SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
-			if (i != -WIDTH / 2) {
+
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
@@ -459,7 +463,8 @@ void FunctionVisualization(int TaskNumber) {
 		}
 		else if (TaskNumber == 4) {
 			point.y = -variables.a * sin(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
-			if (i != -WIDTH / 2) {
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
@@ -467,7 +472,8 @@ void FunctionVisualization(int TaskNumber) {
 		}
 		else if (TaskNumber == 5) {
 			point.y = -variables.a * cos(variables.b * double(i) / SEGMENT + variables.c) * SEGMENT - variables.d * SEGMENT + HEIGTH / 2;
-			if (i != -WIDTH / 2) {
+			if (i != -WIDTH / 2 && ((tmpX > 0 && tmpX < WIDTH && tmpY > 0 && tmpY < HEIGTH) ||
+				(point.x > 0 && point.x < WIDTH && point.y > 0 && point.y < HEIGTH))) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
 			}
 			tmpX = point.x;
