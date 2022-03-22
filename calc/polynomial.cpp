@@ -140,7 +140,7 @@ int Prov(string& s) {
 			break;
 		}
 		if (i > 0) {
-			if (s[i - 1] == 'x' && s[i - 1] == 'X' && s[i - 1] == s[i])
+			if ((s[i] == 'x' || s[i] == 'X') && s[i - 1] == s[i])
 				n += 3;
 			if ((s[i] == '-' && s[i-1] == '+') || (s[i] == '+' && s[i-1] == '-'))
 				n += 3;
@@ -159,10 +159,18 @@ int Prov(string& s) {
 				break;
 			}
 		}
+		if (s[i] == '^' && i == 0) {
+			n += 3;
+			break;
+		}
 		if (s[i] == '^') {
 			int cl = 0;
 			if (s[i] == '-') {
 				n += 3;
+			}
+			if (i>0) {
+				if(s[i-1] == 'x' || s[i - 1] == 'X')
+					n += 3;
 			}
 			for (int j = 0; j < 10; j++) {
 				if (s[i + 1] == B[j]) {
