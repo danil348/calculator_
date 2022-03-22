@@ -11,7 +11,8 @@ int EnterRows() {
 		rows = ChekOnInt();
 		if (rows == 0) cout << "Количество строк не может быть равно 0! Повторите ввод: ";
 		if (rows < 0) cout << "Количество строк не может быть меньше 0! Повторите ввод: ";
-	} while (rows <= 0);
+		if (rows > 100) cout << "Количество строк не может быть больше 100! Повторите ввод: ";
+	} while (rows <= 0 || rows > 100);
 	return rows;
 }
 
@@ -23,6 +24,7 @@ int EnterColumns() {
 		columns = ChekOnInt();
 		if (columns == 0) cout << "Количество эелементов не может быть равно 0! Повторите ввод: ";
 		if (columns < 0) cout << "Количество элементов не может быть меньше 0! Повторите ввод: ";
+		if (columns > 100) cout << "Количество элементов не может быть больше 100! Повторите ввод: ";
 	} while (columns <= 0);
 	return columns;
 }
@@ -104,15 +106,40 @@ void AdditionOfMatrix(int k) {
 //умножение матриц
 void MultiplicationMatrix() {
 	int rows1, rows2, columns1, columns2, flag = 0;
-	double* Matrix1, * Matrix2, * Matrix3;
+	double Matrix1[10][10], Matrix2[10][10], Matrix3[10][10];
 	do { 
 		flag = 0;
 		cout << "Первая матрица: " << endl;
-		rows1 = EnterRows();
-		columns1 = EnterColumns();
+		do {
+			rows1 = EnterRows();
+			if (rows1 > 10) {
+				cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
+			}
+		} while (rows1 > 10);
+		do {
+			columns1 = EnterColumns();
+			if (columns1 > 10) {
+				cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
+			}
+		} while (columns1 > 10);
+	
+		
 		cout << "Вторая матрица: " << endl;
-		rows2 = EnterRows();
-		columns2 = EnterColumns();
+		do {
+			rows2 = EnterRows();
+			if (rows2 > 10) {
+				cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
+			}
+		} while (rows2 > 10);
+		do {
+			columns2 = EnterColumns();
+			if (columns2 > 10) {
+				cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
+			}
+		} while (columns2 > 10);
+
+
+
 		if (columns1 != rows2)
 		{
 			system("cls");
@@ -121,36 +148,46 @@ void MultiplicationMatrix() {
 		}
 	} while (flag == 1);
 
-	Matrix1 = (double*)malloc(rows1 * columns1 * sizeof(double));
+	
 	cout << "Введите  первую матрицу:" << endl;
-	Matrix1 = EnterMatrix(rows1, columns1);
+	for (int i = 0; i < rows1; i++) {
 
-	Matrix2 = (double*)malloc(rows2 * columns2 * sizeof(double));
+		for (int j = 0; j < columns1; j++) {
+			cout << "Matrix1[" << i << "][" << j << "] = ";
+			Matrix1[i][j] = ChekOnDouble();
+		}
+	}
 	cout << "Введите  вторую матрицу:" << endl;
-	Matrix2 = EnterMatrix(rows2, columns2);
+	for (int i = 0; i < rows2; i++) {
+
+		for (int j = 0; j < columns2; j++) {
+			cout << "Matrix2[" << i << "][" << j << "] = ";
+			Matrix2[i][j] = ChekOnDouble();
+		}
+	}
 
 
 	cout << "Введенные матрицы: " << endl << "Первая: " << endl;
 	for (int i = 0; i < rows1; i++) {
 		for (int j = 0; j < columns1; j++) {
-			cout << *(Matrix1 + i * columns1 + j) << "\t ";
+			cout << Matrix1[i][j] << "\t ";
 		}
 		cout << endl;
 	}
 	cout << endl << "Вторая: " << endl;
 	for (int i = 0; i < rows2; i++) {
 		for (int j = 0; j < columns2; j++) {
-			cout << *(Matrix2 + i * columns2 + j) << "\t ";
+			cout << Matrix2[i][j] << "\t ";
 		}
 		cout << endl;
 	}
 
-	Matrix3 = (double*)malloc(rows1 * columns2 * sizeof(double));
+	
 	for (int i = 0; i < rows1; i++) {
 		for (int j = 0; j < columns2; j++) {
-			*(Matrix3 + i * columns2 + j) = 0;
+			Matrix3[i][j] = 0;
 			for (int k = 0; k < columns1; k++) {
-				*(Matrix3 + i * columns2 + j) += *(Matrix1 + i * columns1 + k) * *(Matrix2 + k * columns2 + j);
+				Matrix3[i][j] += Matrix1[i][k] * Matrix2[k][j];
 			}
 		}
 	}
@@ -158,7 +195,7 @@ void MultiplicationMatrix() {
 	cout << "Матрица произведения:" << endl;
 	for (int i = 0; i < rows1; i++) {
 		for (int j = 0; j < columns2; j++)
-			cout << *(Matrix3 + i * columns2 + j) << "\t ";
+			cout << Matrix3[i][j]<< "\t ";
 		cout << endl;
 	}
 }
@@ -264,14 +301,14 @@ void TransposeMatrix() {
 	do {
 		rows = EnterRows();
 		if (rows > 10) {
-			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: ";
+			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
 		}
 	} while (rows > 10);
 
 	do {
 		columns= EnterRows();
 		if (columns > 10) {
-			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: ";
+			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
 		}
 	} while (columns > 10);
 
@@ -352,7 +389,7 @@ int InverseMatrix() {
 	do {
 		size = EnterRows();
 		if (size > 10) {
-			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: ";
+			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
 		}
 	} while (size > 10);
 	cout << "Для данного случая количество строк равно количеству столбцов (" << size << ")" << endl;
@@ -429,7 +466,7 @@ double DeterminantMatrix() {
 	do {
 		size = EnterRows();
 		if (size > 10) {
-			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: ";
+			cout << "В данном задании невозможно ввести матрицу размерности более 10. Повторите ввод: " << endl;
 		}
 	} while (size > 10);
 
