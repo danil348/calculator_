@@ -124,7 +124,6 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 						functions(activeMenu, activeFunctionsDopMenu);
 						ConsoleCursorVisible(false);
 						cout << "\n\nнажмите Enter чтобы вернуться к выбору действий\n";
-
 						do {
 							cmd = _getch();
 							if (cmd == -32) cmd = _getch();
@@ -134,6 +133,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 							}
 						} while (cmd != ESCAPE && cmd != ENTER);
 						activeFunctionsDopMenu = 0;
+						cmd = ' ';
 						break;
 					case UP:
 						if (activeFunctionsDopMenu > 0) {
@@ -152,8 +152,7 @@ void menu::drow(string *typeMenu, const int menuSize, int &activeMenu, int menuI
 						}
 						break;
 					}
-					cmd = ' ';
-				} while (cmd != ESCAPE && cmd != ENTER);
+				} while ((cmd != ESCAPE && cmd != ENTER) || flag == false);
 			}
 			else {
 				ConsoleCursorVisible(true);
