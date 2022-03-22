@@ -14,7 +14,7 @@ int ProvVod(int k) {
 	int prov = 0, a;
 	if (k == -1) {
 		do {
-			cout << "Введите n(0 < n < 10): ";
+			cout << "Введите n(0 < k < 10): ";
 			a = ChekOnInt();
 			if (a > 0 && a < 10)
 				prov = 1;
@@ -26,7 +26,7 @@ int ProvVod(int k) {
 		do {
 			printf_s("N(N!=1): ");
 			a = ChekOnInt();
-			if (a != 0)
+			if (a != 0 && a!=1 && a!=0)
 				prov = 1;
 			else
 				printf_s("N не должно быть равно 1! Повторите попытку.\n");
