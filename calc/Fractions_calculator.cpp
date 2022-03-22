@@ -42,13 +42,18 @@ void AdditionOfFractions() { //Сложение дробей
 		fraction[2].numerator = fraction[2].numerator / fraction[2].denominator;
 		fraction[2].denominator = 1;
 	}
+	int max;
+	if (fraction[2].numerator < fraction[2].denominator) {
+		max = fraction[2].denominator;
+	}
 	else {
-		for (int i = 2; i < 11; i++) {
-			if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-				while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-					fraction[2].numerator /= i;
-					fraction[2].denominator /= i;
-				}
+		max = fraction[2].numerator;
+	}
+	for (int i = 2; i < (max + 1); i++) {
+		if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+			while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+				fraction[2].numerator /= i;
+				fraction[2].denominator /= i;
 			}
 		}
 	}
@@ -129,20 +134,22 @@ void SubtractionOfFractions() { //Вычитание дробей
 		fraction[2].numerator = fraction[0].numerator - fraction[1].numerator;
 	}
 
-	if (fraction[2].numerator % fraction[2].denominator == 0) {
-		fraction[2].numerator = fraction[2].numerator / fraction[2].denominator;
-		fraction[2].denominator = 1;
+	int max;
+	if (fraction[2].numerator < fraction[2].denominator) {
+		max = fraction[2].denominator;
 	}
 	else {
-		for (int i = 2; i < 11; i++) {
-			if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-				while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-					fraction[2].numerator /= i;
-					fraction[2].denominator /= i;
-				}
+		max = fraction[2].numerator;
+	}
+	for (int i = 2; i < (max + 1); i++) {
+		if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+			while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+				fraction[2].numerator /= i;
+				fraction[2].denominator /= i;
 			}
 		}
 	}
+
 	if (fraction[2].numerator < 0 && fraction[2].denominator < 0) {
 		fraction[2].numerator *= -1;
 		fraction[2].denominator *= -1;
@@ -215,17 +222,18 @@ void MultiplicationOfFractions() { //Умножение дробей
 	fraction[2].numerator = fraction[0].numerator * fraction[1].numerator;
 	fraction[2].denominator = fraction[0].denominator * fraction[1].denominator;
 
-	if (fraction[2].numerator % fraction[2].denominator == 0) {
-		fraction[2].numerator = fraction[2].numerator / fraction[2].denominator;
-		fraction[2].denominator = 1;
+	int max;
+	if (fraction[2].numerator < fraction[2].denominator) {
+		max = fraction[2].denominator;
 	}
 	else {
-		for (int i = 2; i < 11; i++) {
-			if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-				while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-					fraction[2].numerator /= i;
-					fraction[2].denominator /= i;
-				}
+		max = fraction[2].numerator;
+	}
+	for (int i = 2; i < (max + 1); i++) {
+		if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+			while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+				fraction[2].numerator /= i;
+				fraction[2].denominator /= i;
 			}
 		}
 	}
@@ -307,17 +315,18 @@ void DivisionOfFractions() { //Деление дробей
 
 	} while (fraction[2].denominator == 0);
 	
-	if (fraction[2].numerator % fraction[2].denominator == 0) {
-		fraction[2].numerator = fraction[2].numerator / fraction[2].denominator;
-		fraction[2].denominator = 1;
+	int max;
+	if (fraction[2].numerator < fraction[2].denominator) {
+		max = fraction[2].denominator;
 	}
 	else {
-		for (int i = 2; i < 11; i++) {
-			if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-				while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
-					fraction[2].numerator /= i;
-					fraction[2].denominator /= i;
-				}
+		max = fraction[2].numerator;
+	}
+	for (int i = 2; i < (max + 1); i++) {
+		if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+			while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
+				fraction[2].numerator /= i;
+				fraction[2].denominator /= i;
 			}
 		}
 	}
@@ -469,7 +478,14 @@ void ReductionOfFractions() { //Сокращение дробей
 		cout << fraction[2].denominator << " = ";
 	}
 
-	for (int i = 2; i < 11; i++) {
+	int max;
+	if (fraction[2].numerator < fraction[2].denominator) {
+		max = fraction[2].denominator;
+	}
+	else {
+		max = fraction[2].numerator;
+	}
+	for (int i = 2; i < (max + 1); i++) {
 		if (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
 			while (fraction[2].numerator % i == 0 && fraction[2].denominator % i == 0) {
 				fraction[2].numerator /= i;
