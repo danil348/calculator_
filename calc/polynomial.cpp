@@ -24,7 +24,7 @@ int ProvVod(int k) {
 	}
 	else {
 		do {
-			printf_s("N%d(N!=1): ", k + 1);
+			printf_s("N(N!=1): ");
 			a = ChekOnInt();
 			if (a != 0)
 				prov = 1;
