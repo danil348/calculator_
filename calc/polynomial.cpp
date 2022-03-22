@@ -14,7 +14,7 @@ int ProvVod(int k) {
 	int prov = 0, a;
 	if (k == -1) {
 		do {
-			cout << "¬ведите n(0 < n < 10): ";
+			cout << "¬ведите n(0 < k < 10): ";
 			a = ChekOnInt();
 			if (a > 0 && a < 10)
 				prov = 1;
