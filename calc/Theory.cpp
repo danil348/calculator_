@@ -36,7 +36,7 @@ void Probability() {
 	cout << "Вероятность P(A) = m/n равна: " << double(m) / n;
 }
 
-double MathExpectation(MathXP* mathemExpDis, int &count) { //Расчёт математического ожидания(нужно для 2-ух функций)
+double MathExpectation(MathXP mathemExpDis[], int& count) { //Расчёт математического ожидания(нужно для 2-ух функций)
 	double MathExpectSum = 0;
 	for (int i = 0; i < count; i++) {
 		MathExpectSum += mathemExpDis[i].x * mathemExpDis[i].p;
@@ -55,9 +55,9 @@ void Dispersion() {
 		if (count > 100) cout << "Количество значений не может быть больше ста! Повторите попытку: ";
 	} while (count <= 0);
 	for (int i = 0; i < count; i++) {
-		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << " = ";
-		mathemExpDis[i].x = ChekOnInt();
-		cout << "Вероятность величины P" << i + 1 << " = ";
+		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << ": ";
+		mathemExpDis[i].x = ChekOnDouble();
+		cout << "Вероятность величины P" << i + 1 << ": ";
 		do {
 			mathemExpDis[i].p = ChekOnDouble();
 			if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
@@ -75,17 +75,17 @@ void Dispersion() {
 void MathematicalExpectation() {
 	MathXP mathemExpDis[100];
 	int count;
-	cout << "Матиматическое ожидание\nУкажите количество значений случайной величины (не более 100): ";
+	cout << "Математическое ожидание\nУкажите количество значений случайной величины (не более 100): ";
 	do {
 		count = ChekOnInt();
 		if (count < 0) cout << "Количество значений не может быть отрицательным! Повторите попытку: ";
 		if (count == 0) cout << "Количество значений не может быть равным нулю! Повторите попытку: ";
 		if (count > 100) cout << "Количество значений не может быть больше ста! Повторите попытку: ";
-	} while (count <= 0);
+	} while (count <= 0 || count > 100);
 	for (int i = 0; i < count; i++) {
-		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << " = ";
-		mathemExpDis[i].x = ChekOnInt();
-		cout << "Вероятность величины P" << i + 1 << " = ";
+		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << ": ";
+		mathemExpDis[i].x = ChekOnDouble();
+		cout << "Вероятность величины P" << i + 1 << ": ";
 		do {
 			mathemExpDis[i].p = ChekOnDouble();
 			if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
