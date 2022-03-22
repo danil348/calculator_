@@ -64,13 +64,12 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 		cout << "Введите N не больше 10 (от N будет зависить количество переменных a):";
 		do {
 			variables.N = ChekOnInt();
-			if (variables.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
-			if (variables.N == 0) cout << "Степень полинома не может быть равна нулю! Повторите попытку: ";
-			if (variables.N > 10) cout << "Ограничение степени в 100! Повторите попытку: ";
-		} while (variables.N <= 2 || variables.N > 10);
+			if (variables.N <= 1) cout << "N должна быть больше 1! Повторите попытку: ";
+			if (variables.N > 10) cout << "N должна быть меньше или равна 10! Повторите попытку: ";
+		} while (variables.N < 2 || variables.N > 10);
 		cout << "Введите переменные a:\n";
 		for (int i = 0; i < variables.N; i++) {
-			cout << "a" << i + 1 << ": ";
+			cout << "a" << i << ": ";
 			variables.arrA[i] = ChekOnDouble();
 		}
 	}
@@ -502,7 +501,7 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 
 	if (TaskNumber == 0) {
 		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
-		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		cout << "Введите N не больше 10 (от N будет зависить количество переменных a):";
 		do {
 			varb.N = ChekOnInt();
 			if (varb.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
