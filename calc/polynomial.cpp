@@ -183,6 +183,10 @@ int Prov(string& s) {
 					cl++;
 					break;
 				}
+				if (s[i + 2] == 'x' || s[i + 2] == 'X') {
+					n += 3;
+					break;
+				}
 			}
 			for (int j = 0; j < 10; j++) {
 				if (s[i + 2] == B[j]) {
