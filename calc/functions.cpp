@@ -640,6 +640,8 @@ void RootPol() {
 	double left = -1, right = 1, eps = 0.1;
 	bool check = true;
 
+	cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
+
 	do {
 		if (N < 1) cout << "N не может быть меньше 1!" << endl;
 		cout << "Введите N: "; 
@@ -690,6 +692,8 @@ void RootDeg()	 {
 	double left = -1, right = 1, x, eps = 0.1;
 	bool check = true;
 
+	cout << "Степенная: a*x^b+c\n";
+
 	cout << "Коэффициенты уравнения функции: " << endl;
 	cout << "Введите a: "; A = ChekOnDouble();
 	cout << "Введите b: "; B = ChekOnDouble();
@@ -732,6 +736,8 @@ void RootInd() {
 	double A, B, C, D;
 	double left = -1, right = 1, x, eps = 0.1;
 	bool check = true;
+
+	cout << "Показательная: a*b^(c*x)+d\n";
 
 	cout << "Коэффициенты уравнения функции: " << endl;
 	cout << "Введите a: "; A = ChekOnDouble();
@@ -776,6 +782,8 @@ void RootLog() {
 	double left = -1, right = 1, x, eps = 0.1;
 	bool check = true;
 
+	cout << "Логарифмическая: a*ln(b*x)+c\n";
+
 	cout << "Коэффициенты уравнения функции: " << endl;
 	cout << "Введите a: "; A = ChekOnDouble();
 	cout << "Введите b: "; B = ChekOnDouble();
@@ -818,6 +826,8 @@ void RootSin() {
 	double A, B, C, D;
 	double left = -1, right = 1, x, eps = 0.1;
 	bool check = true;
+
+	cout << "Синусоида: a*sin(b*x+c)+d\n";
 
 	cout << "Коэффициенты уравнения синусоиды: " << endl;
 	cout << "Введите a: "; A = ChekOnDouble();
@@ -862,6 +872,8 @@ void RootCos() {
 	double A, B, C, D;
 	double left = -1, right = 1, x, eps = 0.1;
 	bool check = true;
+
+	cout << "Косинусоида: a*cos(b*x+c)+d\n";
 
 	cout << "Коэффициенты уравнения косинусоиды: " << endl;
 	cout << "Введите a: "; A = ChekOnDouble();
