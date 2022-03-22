@@ -295,7 +295,7 @@ void AdditionOfPolynomials() {
 				printf_s("%d\n", polyn_c[0] + polyn_c[1]);
 		}
 	}
-	if (polyn_c[0] - polyn_c[1] == 0 && polyn_b[0] - polyn_a[1] == 0 && polyn_b[0] - polyn_b[1] == 0)
+	if (polyn_c[0] + polyn_c[1] == 0 && polyn_b[0] + polyn_a[1] == 0 && polyn_b[0] + polyn_b[1] == 0)
 		printf_s("0\n");
 }
 
@@ -363,7 +363,7 @@ void PolynomialSubtraction() {
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
 		}
 	}
-	if (polyn_c[0] - polyn_c[1] == 0 && polyn_b[0] - polyn_a[1] == 0 && polyn_b[0] - polyn_b[1] == 0)
+	if (polyn_c[0] - polyn_c[1] == 0 && polyn_b[0] - polyn_a[1] == 0 && polyn_c[0] - polyn_c[1] == 0)
 		printf_s("0\n");
 }
 
