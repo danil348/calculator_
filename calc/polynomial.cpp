@@ -338,9 +338,9 @@ void PolynomialSubtraction() {
 		if (polyn_a[1] != 0) {
 			if (polyn_a[1] > 0) {
 				if (polyn_n[1] != 0)
-					printf_s(" + %dx^(%d)", polyn_a[1], polyn_n[1]);
+					printf_s(" - %dx^(%d)", polyn_a[1], polyn_n[1]);
 				else
-					printf_s(" + %dx", polyn_a[1]);
+					printf_s(" - %dx", polyn_a[1]);
 			}
 			else {
 				if (polyn_n[1] != 0)
@@ -351,14 +351,14 @@ void PolynomialSubtraction() {
 		}
 		if (polyn_b[0] - polyn_b[1] != 0) {
 			if (polyn_b[0] - polyn_b[1] > 0)
-				printf_s("+%dx", polyn_b[0] - polyn_b[1]);
+				printf_s("-%dx", polyn_b[0] - polyn_b[1]);
 			else {
 				printf_s("%dx", polyn_b[0] - polyn_b[1]);
 			}
 		}
 		if (polyn_c[0] - polyn_c[1] != 0) {
 			if (polyn_c[0] - polyn_c[1] > 0)
-				printf_s("+%d", polyn_c[0] - polyn_c[1]);
+				printf_s("-%d", polyn_c[0] - polyn_c[1]);
 			else
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
 		}
