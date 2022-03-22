@@ -47,23 +47,33 @@ double MathExpectation(MathXP mathemExpDis[], int& count) { //Расчёт математичес
 void Dispersion() {
 	MathXP mathemExpDis[100];
 	int count;
+	double sum = 0;
 	cout << "Дисперсия\nУкажите количество значений случайной величины (не более 100): ";
 	do {
 		count = ChekOnInt();
 		if (count < 0) cout << "Количество значений не может быть отрицательным! Повторите попытку: ";
 		if (count == 0) cout << "Количество значений не может быть равным нулю! Повторите попытку: ";
 		if (count > 100) cout << "Количество значений не может быть больше ста! Повторите попытку: ";
-	} while (count <= 0);
-	for (int i = 0; i < count; i++) {
-		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << ": ";
-		mathemExpDis[i].x = ChekOnDouble();
-		cout << "Вероятность величины P" << i + 1 << ": ";
-		do {
-			mathemExpDis[i].p = ChekOnDouble();
-			if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
-			if (mathemExpDis[i].p > 1) cout << "Вероятность не может быть больше единицы! Повторите попытку: ";
-		} while (mathemExpDis[i].p < 0 || mathemExpDis[i].p > 1);
-	}
+	} while (count <= 0 || count > 100);
+	do {
+		sum = 0;
+		for (int i = 0; i < count; i++) {
+			cout << "Значение №" << i + 1 << "\nЗначение величины X" << i + 1 << ": ";
+			mathemExpDis[i].x = ChekOnDouble();
+			cout << "Вероятность величины P" << i + 1 << ": ";
+			do {
+				mathemExpDis[i].p = ChekOnDouble();
+				if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
+				if (mathemExpDis[i].p > 1) cout << "Вероятность не может быть больше единицы! Повторите попытку: ";
+			} while (mathemExpDis[i].p < 0 || mathemExpDis[i].p > 1);
+		}
+		for (int i = 0; i < count; i++) {
+			sum += mathemExpDis[i].p;
+		}
+		if (sum < 1) cout << "Сумма вероятностей не должна быть меньше 1! Повторите ввод." << endl;
+		if (sum > 1) cout << "Сумма вероятностей не должна быть больше 1! Повторите ввод." << endl;
+	} while (sum < 1 || sum > 1);
+	
 	double dispersion = 0, expectation = MathExpectation(mathemExpDis, count); //расчёт дисперсиии без "-(мат ожидания)^2"
 	for (int i = 0; i < count; i++) {
 		dispersion += (mathemExpDis[i].x * mathemExpDis[i].x) * mathemExpDis[i].p;
@@ -75,6 +85,7 @@ void Dispersion() {
 void MathematicalExpectation() {
 	MathXP mathemExpDis[100];
 	int count;
+	double sum = 0;
 	cout << "Математическое ожидание\nУкажите количество значений случайной величины (не более 100): ";
 	do {
 		count = ChekOnInt();
@@ -82,16 +93,24 @@ void MathematicalExpectation() {
 		if (count == 0) cout << "Количество значений не может быть равным нулю! Повторите попытку: ";
 		if (count > 100) cout << "Количество значений не может быть больше ста! Повторите попытку: ";
 	} while (count <= 0 || count > 100);
-	for (int i = 0; i < count; i++) {
-		cout << "Значение №" << i + 1 << "\nЗанчение величины X" << i + 1 << ": ";
-		mathemExpDis[i].x = ChekOnDouble();
-		cout << "Вероятность величины P" << i + 1 << ": ";
-		do {
-			mathemExpDis[i].p = ChekOnDouble();
-			if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
-			if (mathemExpDis[i].p > 1) cout << "Вероятность не может быть больше единицы! Повторите попытку: ";
-		} while (mathemExpDis[i].p < 0 || mathemExpDis[i].p > 1);
-	}
+	do {
+		sum = 0;
+		for (int i = 0; i < count; i++) {
+			cout << "Значение №" << i + 1 << "\nЗначение величины X" << i + 1 << ": ";
+			mathemExpDis[i].x = ChekOnDouble();
+			cout << "Вероятность величины P" << i + 1 << ": ";
+			do {
+				mathemExpDis[i].p = ChekOnDouble();
+				if (mathemExpDis[i].p < 0) cout << "Вероятность не может быть отрицательной! Повторите попытку: ";
+				if (mathemExpDis[i].p > 1) cout << "Вероятность не может быть больше единицы! Повторите попытку: ";
+			} while (mathemExpDis[i].p < 0 || mathemExpDis[i].p > 1);
+		}
+		for (int i = 0; i < count; i++) {
+			sum += mathemExpDis[i].p;
+		}
+		if (sum < 1) cout << "Сумма вероятностей не должна быть меньше 1! Повторите ввод." << endl;
+		if (sum > 1) cout << "Сумма вероятностей не должна быть больше 1! Повторите ввод." << endl;
+	} while (sum < 1 || sum > 1);
 	cout << "Математическое ожидание равно: " << MathExpectation(mathemExpDis, count);
 }
 

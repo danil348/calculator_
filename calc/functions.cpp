@@ -603,6 +603,7 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		} while (varb.step == 0);
 	}
 }
+
 double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 	sum = 0;
 	if (TaskNumber == 0) {
