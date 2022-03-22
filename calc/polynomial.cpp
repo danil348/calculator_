@@ -19,7 +19,7 @@ int ProvVod(int k) {
 			if (a > 0 && a < 10)
 				prov = 1;
 			else
-				printf_s("n должно быть в ределах от 0 до 10!\n");
+				printf_s("n должно быть в ределах от 0 до 10! Повторите попытку.\n");
 		} while (prov == 0);
 	}
 	else {
@@ -29,7 +29,7 @@ int ProvVod(int k) {
 			if (a != 0)
 				prov = 1;
 			else
-				printf_s("N не должно быть равно 1!\n");
+				printf_s("N не должно быть равно 1! Повторите попытку.\n");
 		} while (prov == 0);
 	}
 	return a;
