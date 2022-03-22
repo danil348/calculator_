@@ -475,8 +475,10 @@ void DerivativeOfaPolynomial() {
 	}
 	if(polyn_b>0)
 		printf_s("+%d", polyn_b);
-	else
-		printf_s("%d", polyn_b);
+	else {
+		if(polyn_b < 0)
+			printf_s("%d", polyn_b);
+	}
 }
 
 //Деления многочленов
