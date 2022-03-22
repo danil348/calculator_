@@ -135,12 +135,20 @@ int Prov(string& s) {
 		if ((s[i] == 'x' || s[i] == 'X') && n == 0) {
 			n++;
 		}
+		else {
+			for (int j = 0; j < 10; j++) {
+				if (s[i] == B[j]) {
+					if (s[i + 1] == '^')
+						n += 3;
+				}
+			}
+		}
 		if (s[i] == ' ' || s[i] == '.' || s[i] == ',' || s[i] == '?' || s[i] == '!' || s[i] == ',' || s[i] == ':') {
 			n += 3;
 			break;
 		}
 		if (i > 0) {
-			if (s[i - 1] == 'x' && s[i - 1] == 'X' && s[i - 1] == s[i])
+			if ((s[i] == 'x' || s[i] == 'X') && s[i - 1] == s[i])
 				n += 3;
 			if ((s[i] == '-' && s[i-1] == '+') || (s[i] == '+' && s[i-1] == '-'))
 				n += 3;
@@ -159,14 +167,24 @@ int Prov(string& s) {
 				break;
 			}
 		}
+		if (s[i] == '^' && i == 0) {
+			n += 3;
+			break;
+		}
 		if (s[i] == '^') {
 			int cl = 0;
 			if (s[i] == '-') {
 				n += 3;
 			}
+			if (s[i+1] == 'x' || s[i + 1] == 'X')
+				n += 3;
 			for (int j = 0; j < 10; j++) {
 				if (s[i + 1] == B[j]) {
 					cl++;
+					break;
+				}
+				if (s[i + 2] == 'x' || s[i + 2] == 'X') {
+					n += 3;
 					break;
 				}
 			}
@@ -277,6 +295,8 @@ void AdditionOfPolynomials() {
 				printf_s("%d\n", polyn_c[0] + polyn_c[1]);
 		}
 	}
+	if (polyn_c[0] + polyn_c[1] == 0 && polyn_b[0] + polyn_b[1] == 0 && polyn_c[0] + polyn_c[1] == 0)
+		printf_s("0\n");
 }
 
 //вычитание многочленов
@@ -296,14 +316,14 @@ void PolynomialSubtraction() {
 				printf_s("%dx", polyn_a[0] - polyn_a[1]);
 		}
 		if (polyn_b[0] - polyn_b[1] != 0) {
-			if (polyn_b[0] + polyn_b[1] > 0)
+			if (polyn_b[0] - polyn_b[1] > 0)
 				printf_s("+%dx", polyn_b[0] - polyn_b[1]);
 			else {
 				printf_s("%dx", polyn_b[0] - polyn_b[1]);
 			}
 		}
 		if (polyn_c[0] - polyn_c[1] != 0) {
-			if (polyn_c[0] + polyn_c[1]>0)
+			if (polyn_c[0] - polyn_c[1]>0)
 				printf_s("+%d", polyn_c[0] - polyn_c[1]);
 			else
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
@@ -318,9 +338,9 @@ void PolynomialSubtraction() {
 		if (polyn_a[1] != 0) {
 			if (polyn_a[1] > 0) {
 				if (polyn_n[1] != 0)
-					printf_s(" + %dx^(%d)", polyn_a[1], polyn_n[1]);
+					printf_s(" - %dx^(%d)", polyn_a[1], polyn_n[1]);
 				else
-					printf_s(" + %dx", polyn_a[1]);
+					printf_s(" - %dx", polyn_a[1]);
 			}
 			else {
 				if (polyn_n[1] != 0)
@@ -330,19 +350,21 @@ void PolynomialSubtraction() {
 			}
 		}
 		if (polyn_b[0] - polyn_b[1] != 0) {
-			if (polyn_b[0] + polyn_b[1] > 0)
+			if (polyn_b[0] - polyn_b[1] > 0)
 				printf_s("+%dx", polyn_b[0] - polyn_b[1]);
 			else {
 				printf_s("%dx", polyn_b[0] - polyn_b[1]);
 			}
 		}
 		if (polyn_c[0] - polyn_c[1] != 0) {
-			if (polyn_c[0] + polyn_c[1] > 0)
+			if (polyn_c[0] - polyn_c[1] > 0)
 				printf_s("+%d", polyn_c[0] - polyn_c[1]);
 			else
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
 		}
 	}
+	if (polyn_c[0] - polyn_c[1] == 0 && polyn_b[0] - polyn_b[1] == 0 && polyn_c[0] - polyn_c[1] == 0)
+		printf_s("0\n");
 }
 
 //Умножение многочленов
@@ -352,7 +374,7 @@ void PolynomialMultiplication() {
 	vector <int> a_decomposed(11, 0);
 	vector <int> b_decomposed(11, 0);
 	do {
-		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 0\n";
+		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 1\n";
 		cout << "Введите первый многочлен:\n";
 		getline(cin, a);
 		col += Prov(a);
@@ -365,7 +387,7 @@ void PolynomialMultiplication() {
 			k = 1;
 		else {
 			col = 0;
-			cout << "Неверный ввод многочелна! Повоторите попытку.\n";
+			cout << "Неверный ввод многочелна! Повторите попытку.\n";
 		}
 	} while (k == 0);
 	a_decomposed = Decompose(a);
@@ -384,7 +406,7 @@ void MultiplicationByNumber() {
 	vector <int> a_decomposed(11, 0);
 	vector <int> b_decomposed(11, 0);
 	do {
-		cout << "Пример ввода: 3x^2+5x+6\n";
+		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 0\n";
 		cout << "Введите многочлен:\n";
 		getline(cin, a);
 		col += Prov(a);
@@ -399,7 +421,7 @@ void MultiplicationByNumber() {
 			k = 1;
 		else {
 			col = 0;
-			cout << "Неверный ввод ! Повоторите попытку.\n";
+			cout << "Неверный ввод ! Повторите попытку.\n";
 		}
 	} while (k == 0);
 	a_decomposed = Decompose(a);
