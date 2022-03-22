@@ -373,7 +373,7 @@ void PolynomialMultiplication() {
 			k = 1;
 		else {
 			col = 0;
-			cout << "Неверный ввод многочелна! Повоторите попытку.\n";
+			cout << "Неверный ввод многочелна! Повторите попытку.\n";
 		}
 	} while (k == 0);
 	a_decomposed = Decompose(a);
@@ -407,7 +407,7 @@ void MultiplicationByNumber() {
 			k = 1;
 		else {
 			col = 0;
-			cout << "Неверный ввод ! Повоторите попытку.\n";
+			cout << "Неверный ввод ! Повторите попытку.\n";
 		}
 	} while (k == 0);
 	a_decomposed = Decompose(a);
