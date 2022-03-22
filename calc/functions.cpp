@@ -569,18 +569,39 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		cout << "Введите d: ";
 		varb.d = ChekOnDouble();
 	}
-	cout << "Введите начало отрезка: ";
-	varb.A = ChekOnDouble();
-	cout << "Введите конец отрезка: ";
-	do {
-		varb.B = ChekOnDouble();
-		if (varb.B < varb.A) cout << "Конец отрезка не может быть меньше начала! Повторите попытку";
-	} while (varb.B < varb.A);
-	cout << "Введите шаг интегрирования (чем меньше значение, тем больше точность): ";
-	do {
-		varb.step = ChekOnDouble();
-		if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
-	} while (varb.step == 0);
+	if (TaskNumber != 3) {
+		cout << "Введите начальный предел интегрирования: ";
+		varb.A = ChekOnDouble();
+		cout << "Введите конечный предел интегрирования: ";
+		do {
+			varb.B = ChekOnDouble();
+			if (varb.B < varb.A) cout << "Конечный предел не может быть меньше начального! Повторите попытку";
+		} while (varb.B < varb.A);
+		cout << "Введите шаг интегрирования (чем меньше значение, тем больше точность): ";
+		do {
+			varb.step = ChekOnDouble();
+			if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
+		} while (varb.step == 0);
+	}
+	else {
+		cout << "Введите начальный предел интегрирования:  ";
+		do {
+			varb.A = ChekOnDouble();
+			if (varb.A == 0) cout << "Начальный предел не может быть равно 0, так как область значений логарифма ограничена от 0 до бесконечности!\nПовторите попытку: ";
+			if (varb.A < 0) cout << "Начальный предел не может быть меньше 0, так как область значений логарифма ограничена от 0 до бесконечности!\nПовторите попытку: ";
+		} while (varb.A <= 0);
+		cout << "Введите конечный предел интегрирования: ";
+		do {
+			varb.B = ChekOnDouble();
+			if (varb.B < varb.A) cout << "Конечный предел не может быть меньше начального! Повторите попытку: ";
+			if (varb.B == varb.A) cout << "Конечный предел не может быть равен начальному! Повторите попытку: ";
+		} while (varb.B <= varb.A);
+		cout << "Введите шаг интегрирования (чем меньше значение, тем больше точность): ";
+		do {
+			varb.step = ChekOnDouble();
+			if (varb.step == 0) cout << "Шаг не может быть равен нулю! Повторите попытку: ";
+		} while (varb.step == 0);
+	}
 }
 double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 	sum = 0;
@@ -612,12 +633,12 @@ void Integral(int TaskNumber) {
 	double sum, sum_integral = 0;
 	cout << "Нахождение определённого интеграла на отрезке:" << endl;
 	FunctionInput(TaskNumber, varb);
-	varb.x = varb.step + varb.A;
+	varb.x = varb.A + varb.step;
 	while (varb.x < varb.B) {
 		sum_integral += 2 * FunctionIntegral(sum, varb, varb.x, TaskNumber);
 		varb.x += varb.step;
 	}
-	sum_integral = (varb.step / 2) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber));
+	sum_integral = (varb.step / 2) * (sum_integral + FunctionIntegral(sum, varb, varb.A, TaskNumber) + FunctionIntegral(sum,varb,varb.A,TaskNumber));
 	cout << "Интегрирование равно: " << sum_integral;
 }
 //------------------------------------------------------------

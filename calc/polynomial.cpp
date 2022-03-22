@@ -26,7 +26,7 @@ int ProvVod(int k) {
 		do {
 			printf_s("N(N!=1): ");
 			a = ChekOnInt();
-			if (a != 0)
+			if (a != 0 && a!=1)
 				prov = 1;
 			else
 				printf_s("N не должно быть равно 1! Повторите попытку.\n");
@@ -295,6 +295,8 @@ void AdditionOfPolynomials() {
 				printf_s("%d\n", polyn_c[0] + polyn_c[1]);
 		}
 	}
+	if (polyn_c[0] + polyn_c[1] == 0 && polyn_b[0] + polyn_b[1] == 0 && polyn_c[0] + polyn_c[1] == 0)
+		printf_s("0\n");
 }
 
 //вычитание многочленов
@@ -314,14 +316,14 @@ void PolynomialSubtraction() {
 				printf_s("%dx", polyn_a[0] - polyn_a[1]);
 		}
 		if (polyn_b[0] - polyn_b[1] != 0) {
-			if (polyn_b[0] + polyn_b[1] > 0)
+			if (polyn_b[0] - polyn_b[1] > 0)
 				printf_s("+%dx", polyn_b[0] - polyn_b[1]);
 			else {
 				printf_s("%dx", polyn_b[0] - polyn_b[1]);
 			}
 		}
 		if (polyn_c[0] - polyn_c[1] != 0) {
-			if (polyn_c[0] + polyn_c[1]>0)
+			if (polyn_c[0] - polyn_c[1]>0)
 				printf_s("+%d", polyn_c[0] - polyn_c[1]);
 			else
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
@@ -336,9 +338,9 @@ void PolynomialSubtraction() {
 		if (polyn_a[1] != 0) {
 			if (polyn_a[1] > 0) {
 				if (polyn_n[1] != 0)
-					printf_s(" + %dx^(%d)", polyn_a[1], polyn_n[1]);
+					printf_s(" - %dx^(%d)", polyn_a[1], polyn_n[1]);
 				else
-					printf_s(" + %dx", polyn_a[1]);
+					printf_s(" - %dx", polyn_a[1]);
 			}
 			else {
 				if (polyn_n[1] != 0)
@@ -348,19 +350,21 @@ void PolynomialSubtraction() {
 			}
 		}
 		if (polyn_b[0] - polyn_b[1] != 0) {
-			if (polyn_b[0] + polyn_b[1] > 0)
+			if (polyn_b[0] - polyn_b[1] > 0)
 				printf_s("+%dx", polyn_b[0] - polyn_b[1]);
 			else {
 				printf_s("%dx", polyn_b[0] - polyn_b[1]);
 			}
 		}
 		if (polyn_c[0] - polyn_c[1] != 0) {
-			if (polyn_c[0] + polyn_c[1] > 0)
+			if (polyn_c[0] - polyn_c[1] > 0)
 				printf_s("+%d", polyn_c[0] - polyn_c[1]);
 			else
 				printf_s("%d\n", polyn_c[0] - polyn_c[1]);
 		}
 	}
+	if (polyn_c[0] - polyn_c[1] == 0 && polyn_b[0] - polyn_b[1] == 0 && polyn_c[0] - polyn_c[1] == 0)
+		printf_s("0\n");
 }
 
 //Умножение многочленов
