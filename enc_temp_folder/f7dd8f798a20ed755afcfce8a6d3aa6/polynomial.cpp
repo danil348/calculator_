@@ -26,7 +26,7 @@ int ProvVod(int k) {
 		do {
 			printf_s("N(N!=1): ");
 			a = ChekOnInt();
-			if (a != 0 && a!=1 && a!=0)
+			if (a != 0 && a!=1)
 				prov = 1;
 			else
 				printf_s("N не должно быть равно 1! ѕовторите попытку.\n");
