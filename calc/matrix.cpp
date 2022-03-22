@@ -253,7 +253,7 @@ void AdditionMatrixAndNumber(int k) {
 
 }
 
-//трансонирование матрицы
+//транспонирование матрицы
 void TransposeMatrix() {
 
 	int rows, columns;

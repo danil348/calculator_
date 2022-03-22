@@ -20,6 +20,18 @@ struct Variables
 
 struct Func
 {
+	double func0(double x, Variables& variables) {
+		double sum = 0;
+		for (int j = 0; j < variables.N; j++) {
+			if (j == 0) {
+				sum += variables.arrA[j];
+			}
+			else {
+				sum += variables.arrA[j] * pow(x,j);
+			}
+		}
+		return sum;
+	}
 	double func1(double x, Variables& variables) {
 		return variables.a * variables.b * pow(x, variables.b);
 	}
@@ -37,9 +49,9 @@ struct WindowName
 	u8"График полинома",
 	u8"График степенной",
 	u8"График показательной",
-	u8"график логарифмической",
-	u8"график синусоиды",
-	u8"график косинусоиды"
+	u8"График логарифмической",
+	u8"График синусоиды",
+	u8"График косинусоиды"
 	};
 };
 
@@ -53,7 +65,7 @@ struct Extr
 void EnteringTask(int TaskNumber, Variables &variables) {
 	if (TaskNumber == 0) {
 		cout << "Полином степени N: a0 + a1*x + a2*x^2 + ... +aN*x^N\n";
-		cout << "Введите N не больше 100 (от N будет зависить количество переменных a):";
+		cout << "Введите N не больше 10 (от N будет зависить количество переменных a):";
 		do {
 			variables.N = ChekOnInt();
 			if (variables.N < 0) cout << "Степень полинома не может быть меньше нуля! Повторите попытку: ";
@@ -130,6 +142,10 @@ void ExtremesSearch(int TaskNumber) {
 
 	double* allMin = NULL;
 	double* allMax = NULL;
+	double possibleMinLeft = 0;
+	double possibleMaxLeft = 0;
+	double possibleMinRight = 0;
+	double possibleMaxRight = 0;
 	allMax = (double*)malloc(0 * sizeof(double));
 	allMin = (double*)malloc(0 * sizeof(double));
 	int countMax = 0;
@@ -148,16 +164,41 @@ void ExtremesSearch(int TaskNumber) {
 
 	EnteringTask(TaskNumber, variables);
 	if (TaskNumber == 0) {
+		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func0(variables.A, variables);
+		for (double i = variables.A + 0.01; i < variables.B; i += 0.001) {
+			extr.tmpdots[0] = extr.tmpdots[1];
+			extr.tmpdots[1] = extr.tmpdots[2];
+			extr.tmpdots[2] = func.func0(i, variables);
+			if (extr.tmpdots[0] < extr.tmpdots[1] && extr.tmpdots[1] > extr.tmpdots[2] &&
+				extr.tmpdots[2] != extr.tmpdots[0] && extr.tmpdots[2] != extr.tmpdots[1]) {
+				countMax++;
+				allMax = (double*)realloc(allMax, countMax * sizeof(double));
+				allMax[countMax - 1] = i;
 
+				hasMax = true;
+				flag = true;
+			}
+			else if (extr.tmpdots[0] > extr.tmpdots[1] && extr.tmpdots[1] < extr.tmpdots[2]) {
+				countMin++;
+				allMin = (double*)realloc(allMin, countMin * sizeof(double));
+				allMin[countMin - 1] = i;
+
+				hasMin = true;
+				flag = true;
+			}
+		}
 	}
 	else if (TaskNumber == 1) {
-		cout << "x = 0 является экстремумом!";
+		cout << "x = 0 экстремум!";
+		flag = true;
 	}
 	else if (TaskNumber == 2) {
 		cout << "Экстремумов нет!";
+		flag = true;
 	}
 	else if (TaskNumber == 3) {
 		cout << "Экстремумов нет!";
+		flag = true;
 	}
 	else if (TaskNumber == 4) {
 		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func4(variables.A, variables);
@@ -183,6 +224,27 @@ void ExtremesSearch(int TaskNumber) {
 				flag = true;
 			}
 		}
+		if (hasMin == false) {
+			possibleMinLeft = func.func4(variables.A, variables);
+			possibleMinRight = func.func4(variables.B, variables);
+			if (possibleMinLeft >= possibleMinRight) {
+				cout << "min: x = " << variables.B << endl;
+			}
+			else {
+				cout << "min: x = " << variables.A << endl;
+			}
+		}
+		if (hasMax == false) {
+			possibleMaxLeft = func.func4(variables.A, variables);
+			possibleMaxRight = func.func4(variables.B, variables);
+			if (possibleMaxLeft <= possibleMaxRight) {
+				cout << "max: x = " << variables.B << endl;
+			}
+			else {
+				cout << "max: x = " << variables.A << endl;
+			}
+		}
+		flag = true;
 	}
 	else if (TaskNumber == 5) {
 		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func5(variables.A, variables);
@@ -208,6 +270,27 @@ void ExtremesSearch(int TaskNumber) {
 				flag = true;
 			}
 		}
+		if (hasMin == false) {
+			possibleMinLeft = func.func5(variables.A, variables);
+			possibleMinRight = func.func5(variables.B, variables);
+			if (possibleMinLeft >= possibleMinRight) {
+				cout << "min: x = " << variables.B << endl;
+			}
+			else {
+				cout << "min: x = " << variables.A << endl;
+			}
+		}
+		if (hasMax == false) {
+			possibleMaxLeft = func.func5(variables.A, variables);
+			possibleMaxRight = func.func5(variables.B, variables);
+			if (possibleMaxLeft <= possibleMaxRight) {
+				cout << "max: x = " << variables.B << endl;
+			}
+			else {
+				cout << "max: x = " << variables.A << endl;
+			}
+		}
+		flag = true;
 	}
 
 	if (hasMin == true) {
@@ -234,7 +317,7 @@ void ExtremesSearch(int TaskNumber) {
 			cout << "max: x = " << allMax[countMax - 1] << endl;
 		}
 		else {
-			for (int k = 0; k < countMax - 1; k++) {
+			for (int k = 0; k < countMax; k++) {
 				if (allMax[k] > 0) {
 					cout << "max: x = " << allMax[k] << endl;
 					break;
@@ -335,7 +418,6 @@ void FunctionVisualization(int TaskNumber) {
 				}
 				else {
 					point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
-					//point.y += variables.arrA[j] * pow(double(i) / SEGMENT, j) * SEGMENT;
 				}
 			}
 			point.y = -point.y + HEIGTH / 2;
@@ -347,7 +429,11 @@ void FunctionVisualization(int TaskNumber) {
 			point.y = 0;
 		}
 		else if (TaskNumber == 1) {
-			point.y = -(variables.a * pow(i, variables.b)) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			if (i < 0 && (variables.b - int(variables.b)) != 0 ){
+				point.y = -(variables.a * pow(abs(i), variables.b) * pow(-1,int(variables.b))) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
+			}
+			else
+				point.y = -(variables.a * pow(i, variables.b) ) / SEGMENT - variables.c * SEGMENT + HEIGTH / 2;
 			
 			if (i != -WIDTH / 2) {
 				SDL_RenderDrawLine(renderer, tmpX, tmpY, point.x, point.y);
@@ -546,32 +632,33 @@ void RootPol() {
 	bool check = true;
 
 	do {
-		if (N < 1) cout << "N не может быть меньше 1" << endl;
-		cout << "Введите N: "; N = ChekOnInt();
+		if (N < 1) cout << "N не может быть меньше 1!" << endl;
+		cout << "Введите N: "; 
+		N = ChekOnInt();
 	} while (N < 1);
 
 	for (int i = 0; i < N; i++) {
-		cout << "a[" << i << "] = ";
+		cout << "a" << i << " = ";
 		a[i] = ChekOnDouble();
 	}
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно! Повторите попытку." << endl;
+		if (right <= 0) cout << "Правая граница введена неверно! Повторите попытку." << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
-		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно! Повторите попытку." << endl;
+		cout << "Точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(fpol(N, a, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -579,7 +666,7 @@ void RootPol() {
 		else left = x;
 	} while (fabs(left - right) >= eps);
 
-	if (check) cout << "X = " << x << endl;
+	if (check) cout << "x = " << x << endl;
 
 }
 
@@ -595,27 +682,27 @@ void RootDeg()	 {
 	bool check = true;
 
 	cout << "Коэффициенты уравнения функции: " << endl;
-	cout << "A = "; A = ChekOnDouble();
-	cout << "B = "; B = ChekOnDouble();
-	cout << "C = "; C = ChekOnDouble();
+	cout << "Введите a: "; A = ChekOnDouble();
+	cout << "Введите b: "; B = ChekOnDouble();
+	cout << "Введите c: "; C = ChekOnDouble();
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно!" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно!" << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
-		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно!" << endl;
+		cout << "Введите точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(fdeg(A, B, C, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -638,28 +725,28 @@ void RootInd() {
 	bool check = true;
 
 	cout << "Коэффициенты уравнения функции: " << endl;
-	cout << "A = "; A = ChekOnDouble();
-	cout << "B = "; B = ChekOnDouble();
-	cout << "C = "; C = ChekOnDouble();
-	cout << "D = "; D = ChekOnDouble();
+	cout << "Введите a: "; A = ChekOnDouble();
+	cout << "Введите b: "; B = ChekOnDouble();
+	cout << "Введите c: "; C = ChekOnDouble();
+	cout << "Введите d: "; D = ChekOnDouble();
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно!" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно!" << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
-		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно!" << endl;
+		cout << "Введите точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(find(A, B, C, D, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -667,7 +754,7 @@ void RootInd() {
 		else left = x;
 	} while (fabs(left - right) >= eps);
 
-	if (check) cout << "X = " << x << endl;
+	if (check) cout << "x = " << x << endl;
 }
 
 // Логарифмическая
@@ -681,27 +768,27 @@ void RootLog() {
 	bool check = true;
 
 	cout << "Коэффициенты уравнения функции: " << endl;
-	cout << "A = "; A = ChekOnDouble();
-	cout << "B = "; B = ChekOnDouble();
-	cout << "C = "; C = ChekOnDouble();
+	cout << "Введите a: "; A = ChekOnDouble();
+	cout << "Введите b: "; B = ChekOnDouble();
+	cout << "Введите c: "; C = ChekOnDouble();
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно!" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно!" << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
-		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно!" << endl;
+		cout << "Введите точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(flog(A, B, C, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -709,7 +796,7 @@ void RootLog() {
 		else left = x;
 	} while (fabs(left - right) >= eps);
 
-	if (check) cout << "X = " << x << endl;
+	if (check) cout << "x = " << x << endl;
 }
 
 // Синусоида
@@ -724,28 +811,28 @@ void RootSin() {
 	bool check = true;
 
 	cout << "Коэффициенты уравнения синусоиды: " << endl;
-	cout << "A = "; A = ChekOnDouble();
-	cout << "B = "; B = ChekOnDouble();
-	cout << "C = "; C = ChekOnDouble();
-	cout << "D = "; D = ChekOnDouble();
+	cout << "Введите a: "; A = ChekOnDouble();
+	cout << "Введите b: "; B = ChekOnDouble();
+	cout << "Введите c: "; C = ChekOnDouble();
+	cout << "Введите d: "; D = ChekOnDouble();
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно!" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно!" << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
-		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		if (eps > 1 or eps <= 0) cout << "Точность введена неверно!" << endl;
+		cout << "Введите точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(fsin(A, B, C, D, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -768,28 +855,28 @@ void RootCos() {
 	bool check = true;
 
 	cout << "Коэффициенты уравнения косинусоиды: " << endl;
-	cout << "A = "; A = ChekOnDouble();
-	cout << "B = "; B = ChekOnDouble();
-	cout << "C = "; C = ChekOnDouble();
-	cout << "D = "; D = ChekOnDouble();
+	cout << "Введите a: "; A = ChekOnDouble();
+	cout << "Введите b:"; B = ChekOnDouble();
+	cout << "Введите c:"; C = ChekOnDouble();
+	cout << "Введите d:"; D = ChekOnDouble();
 
 	cout << "Границы поиска корней (знаки на границах должны быть разные): " << endl;
 	do {
-		if (left >= 0) cout << "Левая граница введена неверно" << endl;
-		if (right <= 0) cout << "Правая граница введена неверно" << endl;
-		cout << "Левая граница = "; left = ChekOnDouble();
-		cout << "Правая граница = "; right = ChekOnDouble();
+		if (left >= 0) cout << "Левая граница введена неверно!" << endl;
+		if (right <= 0) cout << "Правая граница введена неверно!" << endl;
+		cout << "Левая граница: "; left = ChekOnDouble();
+		cout << "Правая граница: "; right = ChekOnDouble();
 	} while (left >= 0 or right <= 0);
 
 	do {
 		if (eps > 1 or eps <= 0) cout << "Точность введена неверно" << endl;
-		cout << "Точность = "; eps = ChekOnDouble();
+		cout << "Введите точность: "; eps = ChekOnDouble();
 	} while (eps > 1 or eps <= 0);
 
 	do {
 		x = (left + right) / 2;
 		if (int(fcos(A, B, C, D, x)) != 0 and ((right - left) / 2) < eps) {
-			cout << "На данном отрезке функция не имеет корней" << endl;
+			cout << "На данном отрезке функция не имеет корней!" << endl;
 			check = false;
 			break;
 		}
@@ -797,7 +884,7 @@ void RootCos() {
 		else left = x;
 	} while (fabs(left - right) >= eps);
 
-	if (check) cout << "X = " << x << endl;
+	if (check) cout << "x = " << x << endl;
 }
 
 void RootSearch(int taskNumber) {
