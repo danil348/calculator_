@@ -49,7 +49,7 @@ private:
 	int activeFractionsMenu = 0;
 	static const int FractionsMenuSize = 7;
 	string FractionsMenu[FractionsMenuSize] = { "сложение дробей", "вычитание дробей", "умножение", "деление", "сравнение",
-		"сокращение", "Представление в виде дес. дроби"};
+		"сокращение", "представление в виде дес. дроби"};
 
 	int activeMatrixMenu = 0;
 	static const int MatrixMenuSize = 9;

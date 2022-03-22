@@ -539,12 +539,12 @@ void PerfomanceAtTen() { //Представление в десятичном виде
 	else {
 		cout << fraction[2].denominator << " = ";
 	}
-	double result_fract = double(fraction[2].numerator) / fraction[2].denominator;
+	double result_fract = double(fraction[2].numerator) / double(fraction[2].denominator);
 	if (result_fract < 0) {
-		cout << "(" << result_fract << ")";
+		printf_s("(%lf)", result_fract);
 	}
 	else {
-		cout << result_fract;
+		printf_s("%lf", result_fract);
 	}
 }
 

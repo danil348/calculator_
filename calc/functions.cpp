@@ -539,7 +539,11 @@ void FunctionInput(int TaskNumber, Variables& varb) {
 		cout << "Введите a: ";
 		varb.a = ChekOnDouble();
 		cout << "Введите b: ";
-		varb.b = ChekOnDouble();
+		do {
+			varb.b = ChekOnDouble();
+			if (varb.b < 0) cout << "b не может быть меньше 0, так как находится под знаком логарифма! Повторите попытку: ";
+			if (varb.b == 0) cout << "b не может быть равен 0, так как находится под знаком логарифма! Повоторите попытку: ";
+		} while (varb.b <= 0);
 		cout << "Введите c: ";
 		varb.c = ChekOnDouble();
 	}
@@ -592,7 +596,7 @@ double FunctionIntegral(double &sum,Variables varb, double x ,int &TaskNumber) {
 		sum = varb.a * pow(varb.b, (varb.c * x)) + varb.d;
 	}
 	if (TaskNumber == 3) {
-		sum = varb.a * log(varb.b * x) + varb.c;
+		sum = varb.a * log(varb.b*x) + varb.c;
 	}
 	if (TaskNumber == 4) {
 		sum = varb.a * sin(varb.b * x + varb.c) + varb.d;
