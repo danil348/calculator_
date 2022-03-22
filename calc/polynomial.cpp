@@ -169,7 +169,7 @@ int Prov(string& s) {
 				n += 3;
 			}
 			if (i>0) {
-				if(s[i-1] == 'x' || s[i - 1] == 'X')
+				if(s[i-1] != 'x' || s[i - 1] != 'X')
 					n += 3;
 			}
 			for (int j = 0; j < 10; j++) {
