@@ -176,6 +176,8 @@ int Prov(string& s) {
 			if (s[i] == '-') {
 				n += 3;
 			}
+			if (s[i+1] == 'x' || s[i + 1] == 'X')
+				n += 3;
 			for (int j = 0; j < 10; j++) {
 				if (s[i + 1] == B[j]) {
 					cl++;
@@ -364,7 +366,7 @@ void PolynomialMultiplication() {
 	vector <int> a_decomposed(11, 0);
 	vector <int> b_decomposed(11, 0);
 	do {
-		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 0\n";
+		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 1\n";
 		cout << "Введите первый многочлен:\n";
 		getline(cin, a);
 		col += Prov(a);
@@ -396,7 +398,7 @@ void MultiplicationByNumber() {
 	vector <int> a_decomposed(11, 0);
 	vector <int> b_decomposed(11, 0);
 	do {
-		cout << "Пример ввода: 3x^2+5x+6\n";
+		cout << "Пример ввода: 3x^2+5x+6. Степень x должна быть меньше 10, но больше 0\n";
 		cout << "Введите многочлен:\n";
 		getline(cin, a);
 		col += Prov(a);
