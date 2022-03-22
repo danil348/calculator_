@@ -34,9 +34,9 @@ struct Func
 struct WindowName
 {
 	string name[6] = {
-	u8"график полинома",
-	u8"график степенной",
-	u8"график показательной",
+	u8"√рафик полинома",
+	u8"√рафик степенной",
+	u8"√рафик показательной",
 	u8"график логарифмической",
 	u8"график синусоиды",
 	u8"график косинусоиды"
@@ -68,53 +68,53 @@ void EnteringTask(int TaskNumber, Variables &variables) {
 	}
 	else if (TaskNumber == 1) {
 		cout << "—тепенна€: a*x^b+c\n";
-		cout << "¬ведите a ";
+		cout << "¬ведите a: ";
 		variables.a = ChekOnDouble();
-		cout << "¬ведите b ";
+		cout << "¬ведите b: ";
 		variables.b = ChekOnDouble();
-		cout << "¬ведите c ";
+		cout << "¬ведите c: ";
 		variables.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 2) {
-		cout << "показательна€: a*b^(c*x)+d\n";
-		cout << "¬ведите a ";
+		cout << "ѕоказательна€: a*b^(c*x)+d\n";
+		cout << "¬ведите a: ";
 		variables.a = ChekOnDouble();
-		cout << "¬ведите b ";
+		cout << "¬ведите b: ";
 		variables.b = ChekOnDouble();
-		cout << "¬ведите c ";
+		cout << "¬ведите c: ";
 		variables.c = ChekOnDouble();
-		cout << "¬ведите d ";
+		cout << "¬ведите d: ";
 		variables.d = ChekOnDouble();
 	}
 	else if (TaskNumber == 3) {
-		cout << "логарифмическа€: a*ln(b*x)+c\n";
-		cout << "¬ведите a ";
+		cout << "Ћогарифмическа€: a*ln(b*x)+c\n";
+		cout << "¬ведите a: ";
 		variables.a = ChekOnDouble();
-		cout << "¬ведите b ";
+		cout << "¬ведите b: ";
 		variables.b = ChekOnDouble();
-		cout << "¬ведите c ";
+		cout << "¬ведите c: ";
 		variables.c = ChekOnDouble();
 	}
 	else if (TaskNumber == 4) {
-		cout << "синусоида: a*sin(b*x+c)+d\n";
-		cout << "¬ведите a ";
+		cout << "—инусоида: a*sin(b*x+c)+d\n";
+		cout << "¬ведите a: ";
 		variables.a = ChekOnDouble();
-		cout << "¬ведите b ";
+		cout << "¬ведите b: ";
 		variables.b = ChekOnDouble();
-		cout << "¬ведите c ";
+		cout << "¬ведите c: ";
 		variables.c = ChekOnDouble();
-		cout << "¬ведите d ";
+		cout << "¬ведите d: ";
 		variables.d = ChekOnDouble();
 	}
 	else if (TaskNumber == 5) {
-		cout << "синусоида: a*cos(b*x+c)+d\n";
-		cout << "¬ведите a ";
+		cout << " осинусоида: a*cos(b*x+c)+d\n";
+		cout << "¬ведите a: ";
 		variables.a = ChekOnDouble();
-		cout << "¬ведите b ";
+		cout << "¬ведите b: ";
 		variables.b = ChekOnDouble();
-		cout << "¬ведите c ";
+		cout << "¬ведите c: ";
 		variables.c = ChekOnDouble();
-		cout << "¬ведите d ";
+		cout << "¬ведите d: ";
 		variables.d = ChekOnDouble();
 	}
 }
@@ -137,23 +137,27 @@ void ExtremesSearch(int TaskNumber) {
 	bool hasMin = false;
 	bool hasMax = false;
 
-	cout << "введите левую границу ";
-	variables.A = ChekOnDouble();
-	cout << "введите правую границу ";
-	variables.B = ChekOnDouble();
+	
+	do {
+		cout << "¬ведите левую границу: ";
+		variables.A = ChekOnDouble();
+		cout << "¬ведите правую границу: ";
+		variables.B = ChekOnDouble();
+		if (variables.A > variables.B) cout << "Ћева€ граница не может быть больше правой! ѕовотрите ввод." << endl;
+	} while (variables.A > variables.B);
 
 	EnteringTask(TaskNumber, variables);
 	if (TaskNumber == 0) {
 
 	}
 	else if (TaskNumber == 1) {
-		cout << "x = 0 экстремум";
+		cout << "x = 0 €вл€етс€ экстремумом!";
 	}
 	else if (TaskNumber == 2) {
-		cout << "экстремумов нет";
+		cout << "Ёкстремумов нет!";
 	}
 	else if (TaskNumber == 3) {
-		cout << "экстремумов нет";
+		cout << "Ёкстремумов нет!";
 	}
 	else if (TaskNumber == 4) {
 		extr.tmpdots[0] = extr.tmpdots[1] = extr.tmpdots[2] = func.func4(variables.A, variables);
@@ -239,7 +243,7 @@ void ExtremesSearch(int TaskNumber) {
 		}
 	}
 	if (flag == false) {
-		cout << "Ёкстремумов нет";
+		cout << "Ёкстремумов нет!";
 	}
 }
 HWND GetWindowHWND(SDL_Window* wnd)

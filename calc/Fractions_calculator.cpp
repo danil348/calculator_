@@ -10,7 +10,6 @@ struct Fraction
 
 void AdditionOfFractions() { //Сложение дробей
 	Fraction fraction[3];
-	cout << "Сложение дробей" << endl;
 	cout << "Первая дробь\nЧислитель:";
 	fraction[0].numerator = ChekOnInt();
 	cout << "Знаменатель:";
@@ -102,7 +101,6 @@ void AdditionOfFractions() { //Сложение дробей
 
 void SubtractionOfFractions() { //Вычитание дробей
 	Fraction fraction[3];
-	cout << "Вычитание дробей" << endl;
 	cout << "Первая дробь\nЧислитель:";
 	fraction[0].numerator = ChekOnInt();
 	cout << "Знаменатель:";
@@ -194,7 +192,6 @@ void SubtractionOfFractions() { //Вычитание дробей
 
 void MultiplicationOfFractions() { //Умножение дробей
 	Fraction fraction[3];
-	cout << "Умножение дробей" << endl;
 	cout << "Первая дробь\nЧислитель:";
 	fraction[0].numerator = ChekOnInt();
 	cout << "Знаменатель:";
@@ -281,7 +278,6 @@ void MultiplicationOfFractions() { //Умножение дробей
 
 void DivisionOfFractions() { //Деление дробей
 	Fraction fraction[3];
-	cout << "Деление дробей" << endl;
 	do {
 		cout << "Первая дробь\nЧислитель:";
 		fraction[0].numerator = ChekOnInt();
@@ -374,7 +370,6 @@ void DivisionOfFractions() { //Деление дробей
 
 void ComparisonOfFractions() { //Сравнение дробей
 	Fraction fraction[3];
-	cout << "Сравнение дробей" << endl;
 	cout << "Первая дробь\nЧислитель:";
 	fraction[0].numerator = ChekOnInt();
 	cout << "Знаменатель:";
@@ -450,7 +445,6 @@ void ComparisonOfFractions() { //Сравнение дробей
 
 void ReductionOfFractions() { //Сокращение дробей
 	Fraction fraction[3];
-	cout << "Сокращение дроби" << endl;
 	cout << "Дробь\nЧислитель:";
 	fraction[2].numerator = ChekOnInt();
 	cout << "Знаменатель:";
@@ -506,7 +500,6 @@ void ReductionOfFractions() { //Сокращение дробей
 
 void PerfomanceAtTen() { //Представление в десятичном виде
 	Fraction fraction[3];
-	cout << "Перевод в десятичную дробь" << endl;
 	cout << "Дробь\nЧислитель:";
 	fraction[2].numerator = ChekOnInt();
 	cout << "Знаменатель:";
