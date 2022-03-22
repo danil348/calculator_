@@ -475,8 +475,10 @@ void DerivativeOfaPolynomial() {
 	}
 	if(polyn_b>0)
 		printf_s("+%d", polyn_b);
-	else
-		printf_s("%d", polyn_b);
+	else {
+		if(polyn_b < 0)
+			printf_s("%d", polyn_b);
+	}
 }
 
 //Деления многочленов
@@ -531,8 +533,10 @@ void DivisionOfPolynomials() {
 		}
 		if (C3 > 0)
 			printf_s("+%0.3lf", C3);
-		else
-			printf_s("%0.3lf", C3);
+		else {
+			if(C3 < 0)
+				printf_s("%0.3lf", C3);
+		}
 	}
 	else {
 		A3 = A1 / A2;
@@ -543,12 +547,16 @@ void DivisionOfPolynomials() {
 		B3 = B1 - (A1 / A2) * C2;
 		if(B3 > 0.0)
 			printf_s("+%0.3lfX", B3);
-		else
-			printf_s("%0.3lfX", B3);
+		else {
+			if (B3 < 0.0)
+				printf_s("%0.3lfX", B3);
+		}
 		if(C1 > 0)
 			printf_s("+%0.3lf", C1);
-		else
-			printf_s("%0.3lf", C1);
+		else {
+			if (C1 < 0)
+				printf_s("%0.3lf", C1);
+		}
 	}
 
 }
